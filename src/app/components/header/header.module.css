@@ -1,0 +1,22 @@
+.headernav{
+    background-color: #f4633a;
+    color :white;
+   
+}
+
+@media (max-width: 730px){
+    .webnav{
+        display: none;
+    }
+    .mobnav{
+        display: block;
+    }
+}
+@media (min-width: 731px){
+    .webnav{
+        display: block;
+    }
+    .mobnav{
+        display: none;
+    }
+}

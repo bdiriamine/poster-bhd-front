@@ -1,101 +1,113 @@
 import Image from "next/image";
+import Slides from "./components/slides/Slides";
+import { AiOutlineLike } from "react-icons/ai";
+import { GoSponsorTiers } from "react-icons/go";
+import { IoStarOutline } from "react-icons/io5";
+import { SlArrowRight } from "react-icons/sl";
+import img3 from"../../public/assets/image/bc3.jpg";
+import img2 from"../../public/assets/image/bc2.jpg";
+import img4 from"../../public/assets/image/bc4.jpg";
+import img6 from"../../public/assets/image/bc6.jpg";
+import img7 from"../../public/assets/image/bc7.jpg";
+import img8 from"../../public/assets/image/bc8.jpg";
+import Newsletters from "./components/newsletters/Newsletters";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="">
+      <Slides />
+      <section className=" flex flex-col md:flex-row md:container  md:mx-auto ">
+      <div className="flex  flex-col mx-3 pt-6   md:space-x-6 space-y-2 md:flex-row md:space-y-0">
+                <div className="flex  flex-col mx-3 pt-6   md:space-x-6 space-y-2 md:flex-row md:space-y-0">
+                    <div className="w-full md:w-1/3 flex flex-col p-6 space-y-3 rounded-lg border border-slate-300 bg-gray-50-100 justify-center items-center">
+                    <AiOutlineLike className="text-xl md:text-3xl text-red-600" />
+                        <p className=" text-sm md:text-lg font-bold  ">  Des outils conviviaux   </p>
+                        <p className=" text-sm md:text-lg  text-center">  Nos outils intuitifs facilitent la création de produits photo, que vous souhaitiez concevoir rapidement ou créer un chef-d'œuvre   </p>
+                    </div>
+                    <div className="w-full md:w-1/3 flex flex-col p-6 space-y-3 rounded-lg border border-slate-300 bg-gray-50-100 justify-center items-center">
+                    <GoSponsorTiers  className="text-xl md:text-3xl text-blue-600"/>
+                    <p className=" text-sm md:text-lg font-bold ">  Qualité durable</p>
+                    <p className=" text-sm md:text-lg  text-center">  Nous utilisons uniquement des matériaux de haute qualité et traitons chaque produit avec le plus grand soin afin que vos souvenirs perdurent.</p>
+                    </div>
+                    <div className="w-full md:w-1/3 flex flex-col p-6 space-y-3 rounded-lg border border-slate-300 bg-gray-50-100 justify-center items-center">
+                    <IoStarOutline  className="text-xl md:text-3xl text-green-600"/>
+                    <p className=" text-sm md:text-lg font-bold ">Garantie de satisfaction     </p>
+                    <p className="text-sm md:text-lg  text-center">  Nous voulons que vous n'ayez que des expériences positives avec nous. Dans le cas contraire, nous vous aiderons à trouver la meilleure solution.</p>
+                    </div>
+                </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+       <section>   
+            <div className="mt-16 grid  grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4  md:container  md:mx-auto ">
+                <div className="flex flow-col bg-gray-100  ">
+                    <div className=" relative bg-bc1 bg-no-repeat bg-cover bg-bottom  w-full h-64" >
+                        <div className=" absolute top-8 right-0 flex flex-col   ">
+                        <p className="text-white w-40  text-lg md:text-lg md:w-32 lg:w-48  text-center mt-12 ml-12">30% de remise sur les Livres  </p>
+                         <button className="flex flex-wrap text-white text-sm ml-12 items-center mt-16 md:text-lg"> concevoir maintenant <SlArrowRight /> </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flow-col bg-gray-100  ">
+                    <div className=" relative bg-bc9 bg-no-repeat bg-cover bg-bottom  w-full h-64" >
+                        <div className=" absolute top-8 right-0   ">
+                        <p className="text-white w-40  text-lg md:text-lg md:w-32 lg:w-48  text-center mt-12 ml-12">30% de remise sur les calendries  </p>
+                         <button className="flex flex-wrap text-white text-sm ml-12 items-center mt-16 md:text-lg"> concevoir maintenant <SlArrowRight /> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="mt-16 grid  grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  md:container  md:mx-auto ">
+                <div className="flex flow-col bg-gray-100 ">
+                    <div className=" drop-shadow-2xl">
+                    <Image  className="h-64 md:h-72 rounded-md" src={img2} alt="News" />
+                    <p className="font-bold text-lg py-5 text-gray-600 text-center ">Peintures murales </p>
+                        <p className="font-bold text-sm ml-2 text-gray-600">loin </p>
+                        <p className="font-bold text-lg ml-2 text-orange-600">7.500 Dt </p>
+                    </div>
+                </div>
+                <div className="flex flow-col bg-gray-100 ">
+                    <div className="card drop-shadow-2xl">
+                    <Image  className="h-64 md:h-72 rounded-md" src={img3} alt="News" />
+                    <p className="font-bold text-lg py-5 text-gray-600 text-center ">Tableaux muraux avec cadres</p>
+                        <p className="font-bold text-sm ml-2 text-gray-600">loin </p>
+                        <p className="font-bold text-lg ml-2 text-orange-600">70 Dt </p>
+                    </div>
+                </div>
+                <div className="flex flow-col bg-gray-100 ">
+                    <div className="card  drop-shadow-2xl">
+                    <Image  className="h-64 md:h-72 rounded-md" src={img4} alt="News" />
+                    <p className="font-bold text-lg py-5 text-gray-600 text-center ">Creer un livre photo</p>
+                        <p className="font-bold text-sm ml-2 text-gray-600">loin </p>
+                        <p className="font-bold text-lg ml-2 text-orange-600">48 Dt </p>
+                    </div>
+                </div>
+                <div className="flex flow-col bg-gray-100 ">
+                    <div className="card drop-shadow-2xl">
+                    <Image  className="h-64 md:h-72 rounded-md" src={img6} alt="News" />
+                    <p className="font-bold text-lg py-5 text-gray-600 text-center ">Tirage photo</p>
+                        <p className="font-bold text-sm ml-2 text-gray-600">loin </p>
+                        <p className="font-bold text-lg ml-2 text-orange-600">5 Dt </p>
+                    </div>
+                </div>
+                <div className="flex flow-col bg-gray-100 ">
+                    <div className="card  drop-shadow-2xl">
+                    <Image  className="h-64 md:h-72 rounded-md" src={img7} alt="News" />
+                    <p className="font-bold text-lg py-5 text-gray-600 text-center ">Gobelet imprimé</p>
+                        <p className="font-bold text-sm ml-2 text-gray-600">loin </p>
+                        <p className="font-bold text-lg ml-2 text-orange-600">15 Dt </p>
+                    </div>
+                </div>
+                <div className="flex flow-col bg-gray-100 ">
+                    <div className="card  drop-shadow-2xl">
+                    <Image  className="h-64 md:h-72 rounded-md" src={img8} alt="News" />
+                    <p className="font-bold text-lg py-5 text-gray-600 text-center ">Calendrie photo</p>
+                        <p className="font-bold text-sm ml-2 text-gray-600">loin </p>
+                        <p className="font-bold text-lg ml-2 text-orange-600">15 Dt </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <Newsletters />
     </div>
   );
 }

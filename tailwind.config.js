@@ -9,8 +9,12 @@ module.exports = {
     extend: {
       colors: {
         background: "var(--background)",
-        foreground: "var(--foreground)",
+        // foreground: "var(--foreground)",
       },
+      backgroundImage: {
+        'bc1': "url('/assets/image/bc1.webp')",
+        'bc9': "url('/assets/image/bc9.webp')",
+      }
     },
   },
   plugins: [],
