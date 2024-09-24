@@ -1,4 +1,4 @@
-import PrivateRoute from '@/app/components/PrivateRoute'
+import PrivateRoute from '../../_components/PrivateRoute'
 import React from 'react'
 
 const Profile = () => {

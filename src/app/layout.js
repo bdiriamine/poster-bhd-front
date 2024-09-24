@@ -1,9 +1,9 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Header from "./components/header/Header";
-import Navmenu from "./components/navmenu/Navmenu";
-import Slides from "./components/slides/Slides";
-import Footer from "./components/footer/Footer";
+import Header from "../app/_components/header/Header";
+import Navmenu from "../app/_components/navmenu/Navmenu";
+import Slides from "../app/_components/slides/Slides";
+import Footer from "../app/_components/footer/Footer";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from "./_utils/AuthProvider";

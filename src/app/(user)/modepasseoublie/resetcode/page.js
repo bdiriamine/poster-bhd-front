@@ -1,4 +1,4 @@
-import Formreset from '@/app/components/formReset/Formreset'
+import Formreset from '../../../_components/formReset/Formreset'
 import React from 'react'
 
 export default function page() {

@@ -1,4 +1,4 @@
-import Formlogin from '@/app/components/formLogin/Formlogin'
+import Formlogin from '../../_components/formLogin/Formlogin'
 import React from 'react'
 
 export default function login() {

@@ -8,7 +8,7 @@ import Loader from '../loader/loader';
 export default function Formlogin() {
   const router = useRouter(); 
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const { login ,user,loading } = useAuth();
+  const { login ,user,role,loading } = useAuth();
   useEffect(() => {
     if (user) {
       router.push('/profile'); // Rediriger vers la page de profil
@@ -34,7 +34,7 @@ export default function Formlogin() {
         if (!response.ok) {
           throw new Error(data.message || 'Une erreur est survenue');
         }
-        login(data.data, data.token); 
+        login(data.data, data.token ,data.data.role); 
         toast.success('Bienvenu dans notre site Poster Tounsi *-* !', {
           position: "bottom-right",
           autoClose: 5000, // Durée avant fermeture automatique

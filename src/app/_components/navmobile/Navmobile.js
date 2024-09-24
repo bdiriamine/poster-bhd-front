@@ -2,7 +2,9 @@
 import React, { useState } from 'react'
 import img from"../../../../public/assets/image/post.svg"
 import Image from 'next/image';
+import { useAuth } from '@/app/_utils/AuthProvider';
 export default function Navmobile() {
+   
     const [isOpen, setIsOpen] = useState(false);
     // const [tokenjws, setTokenjws] = useState();
     // setTokenjws(JSON.parse(localStorage.getItem('token')) )
@@ -10,6 +12,7 @@ export default function Navmobile() {
       setIsOpen(!isOpen);
       // setTokenjws(JSON.parse(localStorage.getItem('token')))
     };
+
 
   return (
 

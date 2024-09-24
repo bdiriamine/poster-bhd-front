@@ -1,4 +1,4 @@
-import Formregister from '@/app/components/formRegister/Formregister'
+import Formregister from '../../_components/formRegister/Formregister'
 import React from 'react'
 
 export default function register() {

@@ -6,7 +6,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // État de chargement
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
@@ -17,8 +16,9 @@ export const AuthProvider = ({ children }) => {
     setLoading(false); // Fin de la vérification
   }, []);
 
-  const login = (userData, token) => {
-    setUser(userData);
+
+  const login = (userData, token,role) => {
+    setUser(role);
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(userData));
   };

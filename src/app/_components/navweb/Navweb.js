@@ -14,7 +14,8 @@ import { useAuth } from '@/app/_utils/AuthProvider';
 export default function Navweb() {
 
   const [openMenu, setOpenMenu] = useState(null);
-  const { user, logout } = useAuth();
+  const { user, logout,loading } = useAuth();
+  const[role,setRole]=useState(null);
   const handleButtonClick = (menu) => {
     setOpenMenu(openMenu === menu ? null : menu);
   };
@@ -23,19 +24,21 @@ export default function Navweb() {
     setOpenMenu(null);
   };
   useEffect(() => {
+    console.log(user?.role,loading)
     document.addEventListener('click', handleClickOutside);
     return () => {
       document.removeEventListener('click', handleClickOutside);
 
     };
   }, []);
+
   return (
     <header>
        <nav className={styles.navbar}>
             <div >
                 <ul className={styles.btn}>
-                    <li><Link href={"/clientprive"} > <button className={styles.logo}>Clientèle privée <IoLockClosedOutline  className={styles.mgl}/> </button> </Link></li>
-                    <li><Link href={"/serviceclient"} > <button className={styles.logo}>Service Client <BsInfoCircle className={styles.mgl} /> </button></Link></li>
+                    <li><Link href={"/login"} > <button className={styles.logo}>Clientèle privée <IoLockClosedOutline  className={styles.mgl}/> </button> </Link></li>
+                    <li><Link href={"/login"} > <button className={styles.logo}>Service Client <BsInfoCircle className={styles.mgl} /> </button></Link></li>
                 </ul>
             </div>
             <div className="relative inline-block text-left">
@@ -64,14 +67,20 @@ export default function Navweb() {
                                 <li className={styles.navlink}><Link  href={"/profile"}>Mes Projet sauvgarder   </Link>  <MdWork /> </li>
                             </ul>   
                           </div>
-                          )}        
+                          )}       
+          </div>
+          <div>
+            
           </div>
             <div className={styles.right}>
+              
                 {user ? (
               <ul className={styles.btn}> 
+               {user.role==="admin" ?  <li><Link  href="/admin">   <button  className={styles.logo}> admin service</button> </Link></li> :null}
                 <li>
                   <button onClick={logout} className={styles.logo}> Déconnexion</button>
                 </li>
+               
               </ul>
             ) : (
               <ul className={styles.btn}>

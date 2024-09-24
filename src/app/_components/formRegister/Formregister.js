@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, {  useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/_utils/AuthProvider';
+import { useAuth } from '../../_utils/AuthProvider';
 import Loader from '../loader/loader';
 export default function Formregister() {
     const router = useRouter(); 

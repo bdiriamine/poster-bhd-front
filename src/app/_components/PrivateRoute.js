@@ -9,6 +9,7 @@ const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth(); // Récupérer l'utilisateur et l'état de chargement
   const router = useRouter();
 
+
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login'); // Rediriger si non authentifié

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Slides from "./components/slides/Slides";
+import Slides from "../app/_components/slides/Slides";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoSponsorTiers } from "react-icons/go";
 import { IoStarOutline } from "react-icons/io5";
@@ -10,7 +10,7 @@ import img4 from"../../public/assets/image/bc4.jpg";
 import img6 from"../../public/assets/image/bc6.jpg";
 import img7 from"../../public/assets/image/bc7.jpg";
 import img8 from"../../public/assets/image/bc8.jpg";
-import Newsletters from "./components/newsletters/Newsletters";
+import Newsletters from "../app/_components/newsletters/Newsletters";
 
 export default function Home() {
   return (
