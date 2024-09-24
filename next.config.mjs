@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['www.posterxxl.de'], // Add the domain here
-      },
-};
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'www.posterxxl.de',
+        },
 
+      ],
+    },
+  }
 export default nextConfig;
