@@ -24,6 +24,7 @@ export default function UserSideMenu({ datares }) {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
+                    credentials: 'include'
                 });
                 if (!response.ok) throw new Error('Failed to delete user');
                 setData(data.filter(user => user._id !== userId));

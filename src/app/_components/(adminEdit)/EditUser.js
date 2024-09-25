@@ -27,6 +27,7 @@ import Loader from '../loader/loader';
                         headers: {
                             'Authorization': `Bearer ${token}`,
                         },
+                        credentials: 'include'
                     });
     
                     if (!response.ok) throw new Error('Utilisateur introuvable');
@@ -57,6 +58,7 @@ import Loader from '../loader/loader';
                             'Authorization': `Bearer ${token}`,
                         },
                         body: JSON.stringify(user),
+                        credentials: 'include'
                     });
                     if (!response.ok) throw new Error("Échec de la mise à jour de l'utilisateur");
                     toast.success("L'utilisateur a été mis à jour avec succès !");

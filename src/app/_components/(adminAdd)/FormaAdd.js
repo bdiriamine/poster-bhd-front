@@ -38,6 +38,7 @@ const FormAdd = () => {
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(user),
+                credentials: 'include'
             });
 
             if (!response.ok) throw new Error('Failed to add user');
