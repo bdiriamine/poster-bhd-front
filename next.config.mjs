@@ -6,6 +6,12 @@ const nextConfig = {
           protocol: 'https',
           hostname: 'www.posterxxl.de',
         },
+        {
+            protocol: 'http',
+            hostname: 'localhost', // Just the hostname
+            port: '4000', // Specify the port separately
+            
+        }
 
       ],
     },

@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import Taillesidemenu from '../taillesidemenu/Taillesidemenu';
 import Formatsidemenu from '../formatsidemenu/Formatsidemenu';
 import CategorySideMenu from '../categorysidemenu/Categorysidemenu';
+import Souscategories from '../souscategories/Souscategories';
+import ProductSideMenu from '../productsidemenu/Productsidemenu';
+import Usersidemenu from '../usersidemenu/Usersidemenu';
 
 export default function Contenusidemenu({ msg }) {
     const [datares, setDatares] = useState([]); // Initialize with an empty array
@@ -11,6 +14,7 @@ export default function Contenusidemenu({ msg }) {
 
     const getData = async (url) => {
         try {
+            console.log(token)
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -42,8 +46,14 @@ export default function Contenusidemenu({ msg }) {
             case 'Categorie':
                     getData('http://localhost:4000/api/v1/categories');
                     break;
-                
-            default:
+            case'Sous-Categories':
+                     getData('http://localhost:4000/api/v1/subcategories');
+                     break;
+            case 'Produit': getData('http://localhost:4000/api/v1/products');
+            break;
+            case 'Utilisateurs' :  getData('http://localhost:4000/api/v1/users');
+                break;
+            default: getData('http://localhost:4000/api/v1/users');
                 break;
         }
     }, [msg]);
@@ -53,7 +63,10 @@ export default function Contenusidemenu({ msg }) {
             {msg === 'Taille' && <Taillesidemenu datares={datares} msg={msg} />}
             {msg === 'Format' && <Formatsidemenu datares={datares}  msg={msg}/>}
             {msg === 'Categorie' && <CategorySideMenu datares={datares}  msg={msg}/>}
-    
+            {msg === 'Sous-Categories' && <Souscategories datares={datares}  msg={msg}/>}
+            {msg === 'Produit' && <ProductSideMenu datares={datares}  msg={msg}/>}
+            {msg === 'Utilisateurs' && <Usersidemenu datares={datares} />}
+            {!msg && <Usersidemenu datares={datares} msg={msg} />}
 
         </div>
     );

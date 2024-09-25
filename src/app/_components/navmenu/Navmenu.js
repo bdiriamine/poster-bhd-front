@@ -27,10 +27,13 @@ export default function Navmenu() {
     <div className={style.nav}>
     <div className="hidden  md:flex md:flex-wrap justify-center items-center" >
       <div className="relative">
-           <Image src={img}  alt='mahdia highlits'
-  height={0}
-  sizes="10vw"
-  style={{ width: '80%', height: 'auto' }} />
+        <Link href={'/'}> 
+            <Image src={img}  alt='logo'
+      height={0}
+      sizes="10vw"
+      style={{ width: '80%', height: 'auto' }} />
+        </Link>
+
       </div>
   
      
@@ -92,10 +95,10 @@ export default function Navmenu() {
 
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
                 <ul>
-                    <li ><Link  href={"/moncompte"}  >Créer un livre photo      </Link>  </li>
-                    <li ><Link  href={"/statucommand"}> Commencez a concevoir </Link> </li>
-                    <li ><Link  href={"/mesprojets"}>Livres photos thématiques   </Link>  </li>
-                    <li ><Link  href={"/mesprojets"}>Galerie d'inspirations  </Link>  </li>
+                    <li ><Link  href={"/Creer-livre"}  >Créer un livre photo      </Link>  </li>
+                    <li ><Link  href={"/Creer-livre"}> Commencez a concevoir </Link> </li>
+                    <li ><Link  href={"/Creer-livre"}>Livres photos thématiques   </Link>  </li>
+                    <li ><Link  href={"/Creer-livre"}>Galerie d'inspirations  </Link>  </li>
                 </ul>   
               </div>
             )}
@@ -121,9 +124,9 @@ export default function Navmenu() {
 
               <div className="absolute right-0 mt-2 w-[100%] bg-white border border-gray-200 rounded-md shadow-lg z-50">
               <ul className="flex flex-col gap-y-2 px-3">
-                  <li ><Link  href={"/moncompte"}  > Calendrier mural     </Link>  </li>
-                  <li ><Link  href={"/statucommand"}> Calendrier de bureau  </Link> </li>
-                  <li ><Link  href={"/mesprojets"}> Tous les calendries photos  </Link>  </li>
+                  <li ><Link  href={"/calendrier-photo"}  > Calendrier mural     </Link>  </li>
+                  <li ><Link  href={"/calendrier-photo"}> Calendrier de bureau  </Link> </li>
+                  <li ><Link  href={"/calendrier-photo"}> Tous les calendries photos  </Link>  </li>
               </ul>   
               </div>
             )}
@@ -141,15 +144,15 @@ export default function Navmenu() {
 
               <div className="absolute right-0 mt-2 w-[100%] bg-white border border-gray-200 rounded-md shadow-lg z-50">
               <ul className="flex flex-col gap-y-2 px-3">
-                  <li ><Link  href={"/moncompte"}  >créer vos propres cartes       </Link>  </li>
-                  <li ><Link  href={"/statucommand"}> carte de naissance </Link> </li>
-                  <li ><Link  href={"/mesprojets"}>Carte d'invitation d'anniversaire   </Link>  </li>
-                  <li ><Link  href={"/mesprojets"}>Carte de mariage   </Link>  </li>
-                  <li ><Link  href={"/mesprojets"}>Cartes de remerciement  </Link>  </li>
-                  <li ><Link  href={"/mesprojets"}>Cartes de confirmation  </Link>  </li>
-                  <li ><Link  href={"/mesprojets"}>Cartes de noel  </Link>  </li>
-                  <li ><Link  href={"/mesprojets"}>Cartes de Vouvel an  </Link>  </li>
-                  <li ><Link  href={"/mesprojets"}>toutes les Cartes photo  </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}  >créer vos propres cartes       </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}> carte de naissance </Link> </li>
+                  <li ><Link  href={"/carte-photo"}>Carte d'invitation d'anniversaire   </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}>Carte de mariage   </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}>Cartes de remerciement  </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}>Cartes de confirmation  </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}>Cartes de noel  </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}>Cartes de Vouvel an  </Link>  </li>
+                  <li ><Link  href={"/carte-photo"}>toutes les Cartes photo  </Link>  </li>
               </ul>   
               </div>
             )}
@@ -177,9 +180,12 @@ export default function Navmenu() {
             )}
           </div>
           <div className="relative inline-block text-left">
+            <Link href="blogue">
             <button className=" text-black rounded-md  focus:outline-none   p-3 border-none flex flex-wrap  justify-between items-center	text-sm font-bold	">
               Blogue 
             </button>
+            </Link>
+
       
           </div>
    

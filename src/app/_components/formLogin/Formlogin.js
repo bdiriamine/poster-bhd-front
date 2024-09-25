@@ -37,18 +37,18 @@ export default function Formlogin() {
         login(data.data, data.token ,data.data.role); 
         toast.success('Bienvenu dans notre site Poster Tounsi *-* !', {
           position: "bottom-right",
-          autoClose: 5000, // Durée avant fermeture automatique
+          autoClose: 5000, 
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
         });
         router.push("/profile")
-        // Rediriger ou effectuer d'autres actions après l'inscription réussie
+
       } catch (error) {
         console.log(error)
       toast.error(error.message.toString(),{
           position: "bottom-right",
-          autoClose: 5000, // Durée avant fermeture automatique
+          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

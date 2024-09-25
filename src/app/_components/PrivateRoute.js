@@ -8,7 +8,7 @@ import Loader from './loader/loader';
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth(); // Récupérer l'utilisateur et l'état de chargement
   const router = useRouter();
-
+console.log(user,loading)
 
   useEffect(() => {
     if (!loading && !user) {
