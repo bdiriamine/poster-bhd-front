@@ -52,13 +52,12 @@ export default function Navmobile() {
           <nav className="p-4 ">
             <ul className="text-white">
             { user?.role==="admin" && (
-                          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                           <li><Link  href="/admin"> admin service</Link></li>
-                           <li>
-                  <button onClick={logout} className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105"> Déconnexion</button>
-                </li>
-                          </div>
-                          )}   
+              <ul> 
+   <li><Link  href="/admin"> admin service</Link></li>
+              <li><button onClick={logout} className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105"> Déconnexion</button></li>
+
+              </ul>
+                         )}   
 
               <li className="mb-4">
                 <Link href="/peinture-mural" className=" hover:text-teal-500" >

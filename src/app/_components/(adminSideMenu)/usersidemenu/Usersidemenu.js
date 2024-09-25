@@ -37,19 +37,19 @@ export default function UserSideMenu({ datares }) {
     };
 
     return (
-        <div className="bg-teal-50 dark:bg-teal-900 min-h-screen rounded-lg">
+        <div className=" bg-teal-900 min-h-screen rounded-lg">
             {data.length > 0 && (
-                <div className="flex items-center justify-center h-16 mb-4 rounded bg-teal-100 dark:bg-teal-800">
+                <div className="flex items-center justify-center h-16 mb-4 rounded  bg-teal-800">
                     <p className="text-2xl text-white">
                         Liste des utilisateurs
                     </p>
                 </div>
             )}
-            <div className="p-4 border-2 border-teal-200 border-dashed rounded-lg dark:border-teal-700">
+            <div className="p-4 border-2 border-dashed rounded-lg border-teal-700">
                 {data.length > 0 ? (
                     <>
                         {data.map((user) => (
-                            <div key={user._id} className="border p-4 mb-2 rounded-lg bg-white dark:bg-teal-800 text-white dark:text-white">
+                            <div key={user._id} className="border p-4 mb-2 rounded-lg  bg-teal-800 text-white">
                                 <h3 className="text-lg font-bold text-white">{user.name}</h3>
                                 <p className="text-white"><strong>Email:</strong> {user.email}</p>
                                 <p className="text-white"><strong>Role:</strong> {user.role}</p>

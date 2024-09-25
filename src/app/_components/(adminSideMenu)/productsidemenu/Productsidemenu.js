@@ -14,19 +14,19 @@ export default function ProductSideMenu({ datares, msg }) {
     }, [datares]);
 
     return (
-        <div className="bg-teal-50 dark:bg-teal-900 min-h-screen rounded-lg">
+        <div className=" bg-teal-900 min-h-screen rounded-lg">
             {data.length > 0 && (
-                <div className="flex items-center justify-center h-16 mb-4 rounded bg-teal-100 dark:bg-teal-800">
-                    <p className="text-2xl text-white dark:text-white">
+                <div className="flex items-center justify-center h-16 mb-4 rounded  bg-teal-800">
+                    <p className="text-2xl  text-white">
                         Liste des {msg}
                     </p>
                 </div>
             )}
-            <div className="p-4 border-2 border-teal-200 border-dashed rounded-lg dark:border-teal-700">
+            <div className="p-4 border-2  border-dashed rounded-lg border-teal-700">
                 {data.length > 0 ? (
                     <>
                         {data.map((product) => (
-                            <div key={product._id} className="border p-4 mb-2 rounded-lg bg-white dark:bg-teal-800 text-white">
+                            <div key={product._id} className="border p-4 mb-2 rounded-lg  bg-teal-800 text-white">
                                 <h3 className="text-lg font-bold text-white">{product.name}</h3>
                                 <p className="text-white"><strong>Prix:</strong> {product.price} €</p>
                                 <p className="text-white"><strong>Description:</strong> {product.description}</p>

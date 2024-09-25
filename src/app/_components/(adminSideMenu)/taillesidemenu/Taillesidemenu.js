@@ -14,15 +14,15 @@ export default function Taillesidemenu({ datares, msg }) {
     }, [datares]);
 
     return (
-        <div className="bg-teal-50 dark:bg-teal-900 min-h-screen rounded-lg">
+        <div className=" bg-teal-900 min-h-screen rounded-lg">
             {data.length > 0 && (
-                <div className="flex items-center justify-center h-16 mb-4 rounded bg-teal-100 dark:bg-teal-800">
-                    <p className="text-2xl text-white dark:text-white">
+                <div className="flex items-center justify-center h-16 mb-4 rounded  bg-teal-800">
+                    <p className="text-2xl  text-white">
                         Liste des {msg}
                     </p>
                 </div>
             )}
-            <div className="p-4 border-2 border-teal-200 border-dashed rounded-lg dark:border-teal-700">
+            <div className="p-4 border-2 border-dashed rounded-lg border-teal-700">
                 {data.length > 0 ? (
                     <>
                         <table className="hidden md:table w-full text-white">
@@ -76,7 +76,7 @@ export default function Taillesidemenu({ datares, msg }) {
                         {/* Mobile Design */}
                         <div className="md:hidden">
                             {data.map((res) => (
-                                <div key={res._id} className="border p-4 mb-2 rounded-lg bg-white dark:bg-teal-800">
+                                <div key={res._id} className="border p-4 mb-2 rounded-lg  bg-teal-800">
                                     <h3 className="text-lg font-bold text-white">ID: {res._id}</h3>
                                     <p className="text-white"><strong>Largeur:</strong> {res.width}</p>
                                     <p className="text-white"><strong>Hauteur:</strong> {res.height}</p>
