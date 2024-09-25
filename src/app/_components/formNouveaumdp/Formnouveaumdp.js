@@ -20,7 +20,7 @@ export default function Formnouveaumdp() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch('http://localhost:4000/api/v1/auth/resetPassword', {
+          const response = await fetch('text-https://poster-bhd-backend-production.up.railway.app/api/v1/auth/resetPassword', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

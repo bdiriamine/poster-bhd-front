@@ -38,22 +38,22 @@ export default function Contenusidemenu({ msg }) {
     useEffect(() => {
         switch (msg) {
             case 'Taille':
-                getData('http://localhost:4000/api/v1/tailles');
+                getData('https://poster-bhd-backend-production.up.railway.app/api/v1/tailles');
                 break;
             case 'Format':
-                getData('http://localhost:4000/api/v1/formats');
+                getData('https://poster-bhd-backend-production.up.railway.app/api/v1/formats');
                 break;
             case 'Categorie':
-                    getData('http://localhost:4000/api/v1/categories');
+                    getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/categories');
                     break;
             case'Sous-Categories':
-                     getData('http://localhost:4000/api/v1/subcategories');
+                     getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/subcategories');
                      break;
-            case 'Produit': getData('http://localhost:4000/api/v1/products');
+            case 'Produit': getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/products');
             break;
-            case 'Utilisateurs' :  getData('http://localhost:4000/api/v1/users');
+            case 'Utilisateurs' :  getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/users');
                 break;
-            default: getData('http://localhost:4000/api/v1/users');
+            default: getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/users');
                 break;
         }
     }, [msg]);

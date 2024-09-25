@@ -31,7 +31,7 @@ const FormAdd = () => {
             return;
         }
         try {
-            const response = await fetch('http://localhost:4000/api/v1/users', {
+            const response = await fetch('text-https://poster-bhd-backend-production.up.railway.app/api/v1/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

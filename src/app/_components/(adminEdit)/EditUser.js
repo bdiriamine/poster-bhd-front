@@ -23,7 +23,7 @@ import Loader from '../loader/loader';
         useEffect(() => {
             const fetchUserData = async () => {
                 try {
-                    const response = await fetch(`http://localhost:4000/api/v1/users/${id}`, {
+                    const response = await fetch(`text-https://poster-bhd-backend-production.up.railway.app/api/v1/users/${id}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                         },
@@ -50,7 +50,7 @@ import Loader from '../loader/loader';
         
             if (confirmUpdate) {
                 try {
-                    const response = await fetch(`http://localhost:4000/api/v1/users/${id}`, {
+                    const response = await fetch(`text-https://poster-bhd-backend-production.up.railway.app/api/v1/users/${id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

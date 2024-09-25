@@ -19,7 +19,7 @@ export default function UserSideMenu({ datares }) {
         const confirmDelete = window.confirm("Are you sure you want to delete this user?");
         if (confirmDelete) {
             try {
-                const response = await fetch(`http://localhost:4000/api/v1/users/${userId}`, {
+                const response = await fetch(`text-https://poster-bhd-backend-production.up.railway.app/api/v1/users/${userId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`,
