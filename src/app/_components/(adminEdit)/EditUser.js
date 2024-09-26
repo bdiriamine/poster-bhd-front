@@ -23,7 +23,7 @@ import Loader from '../loader/loader';
         useEffect(() => {
             const fetchUserData = async () => {
                 try {
-                    const response = await fetch(`text-https://poster-bhd-backend-production.up.railway.app/api/v1/users/${id}`, {
+                    const response = await fetch(`https://poster-bhd-backend-production.up.railway.app/api/v1/users/${id}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                         },

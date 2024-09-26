@@ -51,13 +51,7 @@ export default function Navmobile() {
           </div>
           <nav className="p-4 ">
             <ul className="text-white">
-            { user?.role==="admin" && (
-              <ul> 
-   <li><Link  href="/admin"> admin service</Link></li>
-              <li><button onClick={logout} className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105"> Déconnexion</button></li>
 
-              </ul>
-                         )}   
 
               <li className="mb-4">
                 <Link href="/peinture-mural" className=" hover:text-teal-500" >
@@ -86,23 +80,33 @@ export default function Navmobile() {
                 </Link>
                 
               </li>
+              { user?.role==="admin" && (
+              <ul> 
+   <li><Link  href="/admin"> admin service</Link></li>
+              <li><button onClick={logout} className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105"> Déconnexion</button></li>
+
+              </ul>
+                         )}   
             </ul>
           </nav>
-          <div className="p-4">
-            <Link href="/register">
-                <button className="w-full bg-teal-600 text-white py-2 rounded-lg border-2 border-teal-600 hover:bg-teal-700 transition-all transform hover:scale-105 mb-2 hover:border-teal-700">
-                            Register
-                </button>
-            </Link>
-            <Link href="/login">
-            
-            <button className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105">
-                        Login
-            </button>
+          {!user&&(                      <div className="p-4">
+                      <Link href="/register">
+                          <button className="w-full bg-teal-600 text-white py-2 rounded-lg border-2 border-teal-600 hover:bg-teal-700 transition-all transform hover:scale-105 mb-2 hover:border-teal-700">
+                                      Register
+                          </button>
+                      </Link>
+                      <Link href="/login">
+                      
+                      <button className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105">
+                                  Login
+                      </button>
+          
+                      </Link>
+          
+                          </div>)
 
-            </Link>
+          }
 
-                </div>
         </div>
       </div>
 
