@@ -45,16 +45,16 @@ export default function Contenusidemenu({ msg }) {
                 getData('https://poster-bhd-backend-production.up.railway.app/api/v1/formats');
                 break;
             case 'Categorie':
-                    getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/categories');
+                    getData('https://poster-bhd-backend-production.up.railway.app/api/v1/categories');
                     break;
             case'Sous-Categories':
-                     getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/subcategories');
+                     getData('https://poster-bhd-backend-production.up.railway.app/api/v1/subcategories');
                      break;
-            case 'Produit': getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/products');
+            case 'Produit': getData('https://poster-bhd-backend-production.up.railway.app/api/v1/products');
             break;
-            case 'Utilisateurs' :  getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/users');
+            case 'Utilisateurs' :  getData('https://poster-bhd-backend-production.up.railway.app/api/v1/users');
                 break;
-            default: getData('text-https://poster-bhd-backend-production.up.railway.app/api/v1/users');
+            default: getData('https://poster-bhd-backend-production.up.railway.app/api/v1/users');
                 break;
         }
     }, [msg]);
