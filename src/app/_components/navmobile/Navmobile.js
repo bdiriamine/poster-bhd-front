@@ -52,29 +52,33 @@ export default function Navmobile() {
           <nav className="p-4 ">
             <ul className="text-white">
 
-
-              <li className="mb-4">
+            <li className="mb-4" onClick={toggleMenu}>
+                <Link href="/profile" className=" hover:text-teal-500" >
+                      Profile
+                </Link>
+              </li>
+              <li className="mb-4" onClick={toggleMenu}>
                 <Link href="/peinture-mural" className=" hover:text-teal-500" >
                       Peinture Mural
                 </Link>
               </li>
-              <li className="mb-4">
+              <li className="mb-4" onClick={toggleMenu}>
                 <Link href="/creer-livre " className=" hover:text-teal-500" >
                        Creer Livre
                 </Link>
               </li>
-              <li className="mb-4">
+              <li className="mb-4" onClick={toggleMenu}>
               <Link href="/calendrie-photo" className=" hover:text-teal-500" >
                      Calendrie photo
                 </Link>
               </li>
-              <li className="mb-4">
+              <li className="mb-4" onClick={toggleMenu}>
               <Link href="/carte-photo" className=" hover:text-teal-500" >
                    Carte Photo
               </Link>
 
               </li>
-              <li className="mb-4">
+              <li className="mb-4" onClick={toggleMenu}>
               <Link href="/cadeaux-photo" className=" hover:text-teal-500" >
                     Cadeaux Photo
                 </Link>
@@ -91,13 +95,13 @@ export default function Navmobile() {
           </nav>
           {!user&&(                      <div className="p-4">
                       <Link href="/register">
-                          <button className="w-full bg-teal-600 text-white py-2 rounded-lg border-2 border-teal-600 hover:bg-teal-700 transition-all transform hover:scale-105 mb-2 hover:border-teal-700">
+                          <button  onClick={toggleMenu} className="w-full bg-teal-600 text-white py-2 rounded-lg border-2 border-teal-600 hover:bg-teal-700 transition-all transform hover:scale-105 mb-2 hover:border-teal-700">
                                       Register
                           </button>
                       </Link>
                       <Link href="/login">
                       
-                      <button className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105">
+                      <button  onClick={toggleMenu} className="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105">
                                   Login
                       </button>
           
