@@ -24,6 +24,7 @@ const UserProfile = () => {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
+                              credentials: 'include'
                 });
 
                 if (!response.ok) throw new Error('User not found');
@@ -52,6 +53,7 @@ const UserProfile = () => {
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(user),
+                          credentials: 'include'
             });
 
             if (!response.ok) throw new Error('Failed to update user');

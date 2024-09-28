@@ -24,6 +24,7 @@ export default function ProductSideMenu({ datares, msg }) {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
                     },
+                              credentials: 'include'
                 });
                 if (!response.ok) throw new Error('Failed to delete this products');
                 setData(datares.filter(product => product._id !== id));

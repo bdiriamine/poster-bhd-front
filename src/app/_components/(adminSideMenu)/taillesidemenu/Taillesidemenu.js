@@ -24,6 +24,7 @@ export default function Taillesidemenu({ datares, msg }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
+                          credentials: 'include'
             });
             if (!response.ok) throw new Error('Failed to delete this taille');
             setData(datares.filter(tailles => tailles._id !== id));

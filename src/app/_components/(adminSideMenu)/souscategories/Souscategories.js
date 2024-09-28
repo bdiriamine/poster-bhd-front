@@ -23,6 +23,7 @@ export default function Souscategories({ datares, msg }) {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
                     },
+                              credentials: 'include'
                 });
                 if (!response.ok) throw new Error('Failed to delete this Sous-categorie');
                 setData(datares.filter(tailles => tailles._id !== id));

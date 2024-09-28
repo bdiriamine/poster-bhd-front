@@ -22,6 +22,7 @@ export default function CategorySideMenu({ datares, msg }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
+                          credentials: 'include'
             });
             if (!response.ok) throw new Error('Failed to delete this categorie');
             setData(datares.filter(res => res._id !== id));
