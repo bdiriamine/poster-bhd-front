@@ -3,16 +3,37 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { MdDeleteForever } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
+import Link from 'next/link';
+import { useAuth } from '@/app/_utils/AuthProvider';
 
 export default function ProductSideMenu({ datares, msg }) {
     const [data, setData] = useState([]);
-
+    const { token } = useAuth();
     useEffect(() => {
         if (datares) {
             setData(datares);
         }
     }, [datares]);
-
+    const  removeProduct = async(id)=>{
+        const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+        if (confirmDelete) {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) throw new Error('Failed to delete this products');
+                setData(datares.filter(product => product._id !== id));
+                alert('product deleted successfully');
+            } catch (error) {
+                console.error(error);
+                alert('Failed to delete this product');
+            }
+        }
+    };
     return (
         <div className=" bg-teal-900 min-h-screen rounded-lg">
             {data.length > 0 && (
@@ -68,12 +89,13 @@ export default function ProductSideMenu({ datares, msg }) {
                                     <button className="bg-teal-600 text-white p-2 m-2 rounded-lg">
                                         <GrEdit className="text-white text-xl" />
                                     </button>
-                                    <button className="bg-red-600 text-white p-2 rounded-lg ml-2">
+                                    <button className="bg-red-600 text-white p-2 rounded-lg ml-2" onClick={()=>{removeProduct(product._id)}}> 
                                         <MdDeleteForever className="text-white text-xl" />
                                     </button>
                                 </div>
                             </div>
                         ))}
+                         <Link href={'/admin/product'}> <button className="border bg-orange-500 text-black p-2 rounded-lg">Ajouter produit</button> </Link>
                     </>
                 ) : (
                     <p className="text-white">Aucune donnée disponible</p>

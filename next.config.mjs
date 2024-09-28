@@ -11,6 +11,11 @@ const nextConfig = {
             hostname: 'localhost', // Just the hostname
             port: '4000', // Specify the port separately
             
+        },
+        {
+            protocol: 'https',
+            hostname: 'poster-bhd-backend-production.up.railway.app', // Just the hostname
+
         }
 
       ],

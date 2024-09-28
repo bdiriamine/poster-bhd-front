@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import { FaRegCircleUser } from "react-icons/fa6";
 import { useAuth } from '../../_utils/AuthProvider';
 import { TbArrowAutofitWidth, TbCategory, TbAdjustmentsFilled, TbTruckDelivery } from "react-icons/tb";
 import { MdFormatShapes } from "react-icons/md";
@@ -48,9 +47,6 @@ export default function Navsideadmin() {
                 </button>
                 <button className="flex items-center p-2  rounded-lg text-white  hover:bg-gray-700 mx-2 text-xs" onClick={() => setMsg('Utilisateurs')}>
                     <span className="ms-2 whitespace-nowrap">Utilisateurs</span>
-                </button>
-                <button className="flex items-center p-2  rounded-lg text-white  hover:bg-gray-700 mx-2 text-xs">
-                    <span className="ms-2 whitespace-nowrap">Deconnection</span>
                 </button>
             </div>
 

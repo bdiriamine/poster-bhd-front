@@ -19,7 +19,7 @@ export default function UserSideMenu({ datares }) {
         const confirmDelete = window.confirm("Are you sure you want to delete this user?");
         if (confirmDelete) {
             try {
-                const response = await fetch(`text-https://poster-bhd-backend-production.up.railway.app/api/v1/users/${userId}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/${userId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -71,13 +71,13 @@ export default function UserSideMenu({ datares }) {
                                     >
                                         <MdDeleteForever className="text-white text-xl" />
                                     </button>
-                                    <button className="bg-yellow-500 text-white p-2 rounded-lg ml-2" >
-                                        <Link href={'/admin/user'}>   <TiUserAddOutline className="text-white text-xl" />  </Link>
-                                      
-                                    </button>
                                 </div>
                             </div>
                         ))}
+                                                         <Link href={'/admin/user'}>    <button className=" flex flex-row space-x-4  bg-yellow-500 text-white p-2 rounded-lg ml-2 w[100%]" >
+                                        Ajouter Utilisateur  <TiUserAddOutline className="text-white text-xl" /> 
+                                      
+                                    </button> </Link>
                     </>
                 ) : (
                     <p className="text-white">Aucune donnée disponible</p>

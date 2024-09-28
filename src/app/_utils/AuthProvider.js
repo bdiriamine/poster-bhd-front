@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const AuthContext = createContext();
 
@@ -7,29 +8,71 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const router = useRouter();
   useEffect(() => {
-    // Load token and user from local storage
     const storedToken = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
-
+  
+    console.log('Stored token:', storedToken);
+    console.log('Stored user data:', userData);
+  
     if (storedToken) {
       setToken(storedToken);
+      verifyToken(storedToken); // Call to verify the token
     }
-
+  
     if (userData) {
       setUser(JSON.parse(userData));
     }
-
+  
     setLoading(false); // Finish loading state
   }, []);
 
-  const login = (userData, token, role) => {
-    setUser(userData); // Store full user data
-    setToken(token);
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(userData));
-    console.log('User logged in:', userData);
+  const login = (userData, token) => {
+    if (token) { // Check if token exists
+      setUser(userData);
+      setToken(token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(userData));
+      console.log('User logged in:', userData);
+    } else {
+      console.error('No token received during login');
+    }
+  };
+
+  const verifyToken = async (token) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/getMe`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+      });
+  
+      const result = await response.json();
+      console.log('API Response:', result); // Log the entire response
+  
+      // Adjust here to access the user object correctly
+      if (!response.ok || !result.data) {
+        console.log("User not found or invalid token");
+        handleLogout(); // Token is invalid or user not found
+      } else {
+        setUser(result.data); // Set user if the token is valid
+      }
+    } catch (error) {
+      console.error('Error verifying token:', error);
+      handleLogout(); // Handle error by logging out
+    }
+  };
+
+  const handleLogout = () => {
+    logout(); // Clear user state
+    // Only clear the relevant items
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    router.push('/'); // Redirect to home
   };
 
   const logout = () => {
@@ -42,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, loading, token, login, logout }}>
-      {children}
+      {!loading && children} {/* Prevent rendering children until loading is false */}
     </AuthContext.Provider>
   );
 };

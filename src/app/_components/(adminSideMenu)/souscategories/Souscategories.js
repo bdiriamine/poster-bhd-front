@@ -2,16 +2,37 @@
 import React, { useEffect, useState } from 'react';
 import { MdDeleteForever } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
+import Link from 'next/link';
+import { useAuth } from '@/app/_utils/AuthProvider';
 
-export default function CategorySideMenu({ datares, msg }) {
+export default function Souscategories({ datares, msg }) {
     const [data, setData] = useState([]);
-
+    const { token } = useAuth();
     useEffect(() => {
         if (datares) {
             setData(datares);
         }
     }, [datares]);
-
+    const removeSousCtaegorie =async(id)=>{
+        const confirmDelete = window.confirm("Are you sure you want to delete this  Sous-categorie?");
+        if (confirmDelete) {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/subcategories/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) throw new Error('Failed to delete this Sous-categorie');
+                setData(datares.filter(tailles => tailles._id !== id));
+                alert('Sous-categorie deleted successfully');
+            } catch (error) {
+                console.error(error);
+                alert('Failed to delete this Sous-categorie');
+            }
+        }
+    };
     return (
         <div className=" bg-teal-900 min-h-screen rounded-lg">
             {data.length > 0 && (
@@ -43,7 +64,7 @@ export default function CategorySideMenu({ datares, msg }) {
                                             <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
                                                 <GrEdit className="text-white text-xl" />
                                             </button>
-                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2">
+                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeSousCtaegorie(res._id)}}>
                                                 <MdDeleteForever className="text-white text-xl" />
                                             </button>   
                                         </td>
@@ -63,7 +84,7 @@ export default function CategorySideMenu({ datares, msg }) {
                                         <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
                                             <GrEdit className="text-white text-xl" />
                                         </button>
-                                        <button className="bg-red-600 text-black p-2 rounded-lg ml-2">
+                                        <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeSousCtaegorie(res._id)}}>
                                             <MdDeleteForever className="text-white text-xl" />
                                         </button>   
                                     </div>
@@ -71,7 +92,7 @@ export default function CategorySideMenu({ datares, msg }) {
                             ))}
                         </div>
 
-                        <button className="border bg-orange-500 text-black p-2 rounded-lg mt-4"> + Créer Sous-Catégorie </button>
+                        <Link href={'/admin/sous-categorie'}>    <button className="border bg-orange-500 text-black p-2 rounded-lg mt-4"> + Créer Sous-Catégorie </button> </Link>
                     </>
                 ) : (
                     <p className="text-white">Aucune donnée disponible</p>

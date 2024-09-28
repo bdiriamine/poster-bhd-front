@@ -2,16 +2,38 @@
 import React, { useEffect, useState } from 'react';
 import { MdDeleteForever } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
+import { useAuth } from '@/app/_utils/AuthProvider';
 
 export default function Formatsidemenu({ datares, msg }) {
     const [data, setData] = useState([]);
-
+    const { token } = useAuth();
     useEffect(() => {
         if (datares) {
             setData(datares);
         }
     }, [datares]);
-
+const removeForamt=async(id)=>{
+    console.log(id)
+    console.log(datares)
+    const confirmDelete = window.confirm("Are you sure you want to delete this Format?");
+    if (confirmDelete) {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/formats/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                credentials: 'include'
+            });
+            if (!response.ok) throw new Error('Failed to delete Format');
+            setData(datares.filter(user => user._id !== id));
+            alert('Format deleted successfully');
+        } catch (error) {
+            console.error(error);
+            alert('Failed to delete Format');
+        }
+    }
+}
     return (
         <div className=" bg-teal-900 min-h-screen">
             {data.length > 0 && (
@@ -57,7 +79,7 @@ export default function Formatsidemenu({ datares, msg }) {
                                         <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
                                                 <GrEdit className="text-white text-xl" />
                                             </button>
-                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2">
+                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeForamt(res._id)}}>
                                                 <MdDeleteForever className="text-white text-xl" />
                                             </button>   
                                         </td>
@@ -90,14 +112,14 @@ export default function Formatsidemenu({ datares, msg }) {
                                     <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
                                                 <GrEdit className="text-white text-xl" />
                                             </button>
-                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2">
+                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeForamt(res._id)}}>
                                                 <MdDeleteForever className="text-white text-xl" />
                                             </button>   
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <button className="border bg-orange-500 text-black p-2 rounded-lg"> + Créer Format </button>
+                        
                     </>
                 ) : (
                     <p className="text-white">Aucune donnée disponible</p>

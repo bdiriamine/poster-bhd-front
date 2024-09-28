@@ -20,7 +20,7 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch('https://poster-bhd-backend-production.up.railway.app/api/v1/users/getMe', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/getMe`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -45,7 +45,7 @@ const UserProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://poster-bhd-backend-production.up.railway.app/api/v1/users', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

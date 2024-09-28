@@ -97,7 +97,7 @@ export default function Footer() {
         </div>
 
 </div>
-<div className='fixed bottom-0 left-0 right-0 flex flex-col md:flex-row  justify-evenly  bg-slate-100  items-center py-4	mt-2 '>
+<div className=' bottom-0 flex flex-col md:flex-row  justify-evenly  bg-slate-100  items-center py-4	mt-2 '>
     <p>afficheXXL © 2024 </p>
     <div className='flex flex-col md:flex-row  justify-evenly space-x-4'>
     <p>politique de confidentialité</p>

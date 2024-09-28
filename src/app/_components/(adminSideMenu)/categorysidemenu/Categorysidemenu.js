@@ -2,15 +2,36 @@
 import React, { useEffect, useState } from 'react';
 import { MdDeleteForever } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
+import Link from 'next/link';
+import { useAuth } from '@/app/_utils/AuthProvider';
 export default function CategorySideMenu({ datares, msg }) {
     const [data, setData] = useState([]);
-
+    const { token } = useAuth();
     useEffect(() => {
         if (datares && Array.isArray(datares)) {
             setData(datares);
         }
     }, [datares]);
-
+   const removeCategory =async(id)=>{
+    const confirmDelete = window.confirm("Are you sure you want to delete this categorie?");
+    if (confirmDelete) {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) throw new Error('Failed to delete this categorie');
+            setData(datares.filter(res => res._id !== id));
+            alert('categorie deleted successfully');
+        } catch (error) {
+            console.error(error);
+            alert('Failed to delete this categorie');
+        }
+    }
+};
     return (
         <div className=" bg-teal-900 min-h-screen">
             {data.length > 0 && (
@@ -59,7 +80,7 @@ export default function CategorySideMenu({ datares, msg }) {
                                             <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
                                                 <GrEdit className="text-white text-xl" />
                                             </button>
-                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2">
+                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeCategory(res._id)}}>
                                                 <MdDeleteForever className="text-white text-xl" />
                                             </button>             
                                             </td>
@@ -95,15 +116,15 @@ export default function CategorySideMenu({ datares, msg }) {
                                         <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
                                                 <GrEdit className="text-white text-xl" />
                                             </button>
-                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2">
-                                                <MdDeleteForever className="text-white text-xl" />
+                                            <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeCategory(res._id)}}>
+                                                <MdDeleteForever className="text-white text-xl"  />
                                             </button>   
                                         </div>
                                     </div>
                                 ))}
                             </div>
 
-                            <button className="border bg-orange-500 text-black p-2 rounded-lg"> + Créer Format </button>
+                            <Link href={'/admin/categorie'}>    <button className="border bg-orange-500 text-black p-2 rounded-lg"> + Créer Format </button> </Link>
                         </div>
                     ) : (
                         <p className="text-white">Aucune donnée disponible</p>

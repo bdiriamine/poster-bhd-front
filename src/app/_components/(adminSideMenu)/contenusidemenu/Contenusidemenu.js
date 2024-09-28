@@ -21,7 +21,7 @@ export default function Contenusidemenu({ msg }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                credentials: 'include'
+                 credentials: 'include'
             });
 
             if (!response.ok) {
@@ -39,22 +39,22 @@ export default function Contenusidemenu({ msg }) {
     useEffect(() => {
         switch (msg) {
             case 'Taille':
-                getData('https://poster-bhd-backend-production.up.railway.app/api/v1/tailles');
+                getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/tailles`);
                 break;
             case 'Format':
-                getData('https://poster-bhd-backend-production.up.railway.app/api/v1/formats');
+                getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/formats`);
                 break;
             case 'Categorie':
-                    getData('https://poster-bhd-backend-production.up.railway.app/api/v1/categories');
+                    getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`);
                     break;
             case'Sous-Categories':
-                     getData('https://poster-bhd-backend-production.up.railway.app/api/v1/subcategories');
+                     getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/subcategories`);
                      break;
-            case 'Produit': getData('https://poster-bhd-backend-production.up.railway.app/api/v1/products');
+            case 'Produit': getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products`);
             break;
-            case 'Utilisateurs' :  getData('https://poster-bhd-backend-production.up.railway.app/api/v1/users');
+            case 'Utilisateurs' :  getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`);
                 break;
-            default: getData('https://poster-bhd-backend-production.up.railway.app/api/v1/users');
+            default: getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`);
                 break;
         }
     }, [msg]);

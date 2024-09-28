@@ -22,7 +22,7 @@ export default function Formreset() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch('text-https://poster-bhd-backend-production.up.railway.app/api/v1/auth/verifyResetCode', {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/verifyResetCode`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

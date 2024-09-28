@@ -23,8 +23,9 @@ export default function Formregister() {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(process.env.BASE_URL)
         try {
-          const response = await fetch('text-https://poster-bhd-backend-production.up.railway.app/api/v1/auth/signup', {
+          const response = await fetch(`${process.env.BASE_URL}/api/v1/auth/signup`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
