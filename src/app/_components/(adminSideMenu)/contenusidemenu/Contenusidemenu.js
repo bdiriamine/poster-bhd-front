@@ -7,6 +7,7 @@ import CategorySideMenu from '../categorysidemenu/Categorysidemenu';
 import Souscategories from '../souscategories/Souscategories';
 import ProductSideMenu from '../productsidemenu/Productsidemenu';
 import Usersidemenu from '../usersidemenu/Usersidemenu';
+import PromotionSideMenu from '../promotionsidemenu/promotionssidemenu';
 
 export default function Contenusidemenu({ msg }) {
     const [datares, setDatares] = useState([]); // Initialize with an empty array
@@ -54,6 +55,8 @@ export default function Contenusidemenu({ msg }) {
             break;
             case 'Utilisateurs' :  getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`);
                 break;
+            case'Promotion': getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/promotions`);
+            break;
             default: getData(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`);
                 break;
         }
@@ -67,6 +70,7 @@ export default function Contenusidemenu({ msg }) {
             {msg === 'Sous-Categories' && <Souscategories datares={datares}  msg={msg}/>}
             {msg === 'Produit' && <ProductSideMenu datares={datares}  msg={msg}/>}
             {msg === 'Utilisateurs' && <Usersidemenu datares={datares} />}
+            {msg === 'Promotion' && <PromotionSideMenu datares={datares} />}
             {!msg && <Usersidemenu datares={datares} msg={msg} />}
 
         </div>

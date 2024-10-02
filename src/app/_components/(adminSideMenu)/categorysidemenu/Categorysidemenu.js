@@ -79,7 +79,7 @@ export default function CategorySideMenu({ datares, msg }) {
                                             <td className="text-center border">{res.updatedAt}</td>
                                             <td className="text-center border">
                                             <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
-                                                <GrEdit className="text-white text-xl" />
+                                            <Link href={`/edit/categories/${res._id}`}> <GrEdit className="text-white text-xl" /> </Link>
                                             </button>
                                             <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeCategory(res._id)}}>
                                                 <MdDeleteForever className="text-white text-xl" />
@@ -115,7 +115,7 @@ export default function CategorySideMenu({ datares, msg }) {
                                         <p>Mis à jour le: {res.updatedAt}</p>
                                         <div className="mt-2">
                                         <button className="bg-teal-600 text-black p-2 m-2 rounded-lg">
-                                                <GrEdit className="text-white text-xl" />
+                                        <Link href={`/edit/categories/${res._id}`}> <GrEdit className="text-white text-xl" /> </Link>
                                             </button>
                                             <button className="bg-red-600 text-black p-2 rounded-lg ml-2" onClick={()=>{removeCategory(res._id)}}>
                                                 <MdDeleteForever className="text-white text-xl"  />
@@ -125,7 +125,7 @@ export default function CategorySideMenu({ datares, msg }) {
                                 ))}
                             </div>
 
-                            <Link href={'/admin/categorie'}>    <button className="border bg-orange-500 text-black p-2 rounded-lg"> + Créer Format </button> </Link>
+                         
                         </div>
                     ) : (
                         <p className="text-white">Aucune donnée disponible</p>

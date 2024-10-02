@@ -59,7 +59,7 @@ export default function UserSideMenu({ datares }) {
                                 <p className="text-white"><strong>Updated At:</strong> {new Date(user.updatedAt).toLocaleString()}</p>
 
                                 <div className="mt-2">
-                                    <Link href={`/edit/${user._id}`}>
+                                    <Link href={`/edit/user/${user._id}`}>
                                         <button className="bg-teal-600 text-white p-2 m-2 rounded-lg">
                                             <GrEdit className="text-white text-xl" />
                                         </button>
@@ -74,7 +74,7 @@ export default function UserSideMenu({ datares }) {
                                 </div>
                             </div>
                         ))}
-                                                         <Link href={'/admin/user'}>    <button className=" flex flex-row space-x-4  bg-yellow-500 text-white p-2 rounded-lg ml-2 w[100%]" >
+                                                         <Link href={'/admin/edit/user'}>    <button className=" flex flex-row space-x-4  bg-yellow-500 text-white p-2 rounded-lg ml-2 w[100%]" >
                                         Ajouter Utilisateur  <TiUserAddOutline className="text-white text-xl" /> 
                                       
                                     </button> </Link>

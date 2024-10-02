@@ -6,10 +6,12 @@ import { useState, useEffect } from 'react';
 export default function FormAddCategorie() {
     const { token } = useAuth();
     const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]); // State for storing products
     const [selectedCategory, setSelectedCategory] = useState('');
     const [newCategory, setNewCategory] = useState('');
-    const [subcategories, setSubcategories] = useState([{ name: '', produits: '' }]);
+    const [subcategories, setSubcategories] = useState([{ name: '', produits: [] }]);
 
+    // Fetch categories
     const fetchCategories = async () => {
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`, {
@@ -18,7 +20,7 @@ export default function FormAddCategorie() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                    credentials: 'include'
+                credentials: 'include'
             });
             const data = await response.json();
             if (response.ok) {
@@ -31,8 +33,31 @@ export default function FormAddCategorie() {
         }
     };
 
+    // Fetch products
+    const fetchProducts = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                credentials: 'include'
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setProducts(data.data);
+            } else {
+                console.error('Failed to fetch products:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
+
     useEffect(() => {
         fetchCategories();
+        fetchProducts(); // Fetch products when the component mounts
     }, [token]);
 
     const createCategory = async () => {
@@ -64,7 +89,7 @@ export default function FormAddCategorie() {
                 body: JSON.stringify({
                     name: subcategory.name,
                     category: categoryId,
-                    produits: null,
+                    produits: subcategory.produits, // Assuming this is an array of product IDs
                 }),
             });
             return await response.json();
@@ -74,12 +99,19 @@ export default function FormAddCategorie() {
     };
 
     const handleAddSubcategory = () => {
-        setSubcategories([...subcategories, { name: '', produits: '' }]);
+        setSubcategories([...subcategories, { name: '', produits: [] }]);
     };
 
     const handleSubcategoryChange = (index, event) => {
+        const { name, value } = event.target;
         const newSubcategories = [...subcategories];
-        newSubcategories[index][event.target.name] = event.target.value;
+        if (name === 'produits') {
+            // Handle multiple select options for products
+            const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+            newSubcategories[index][name] = selectedOptions;
+        } else {
+            newSubcategories[index][name] = value;
+        }
         setSubcategories(newSubcategories);
     };
 
@@ -103,11 +135,10 @@ export default function FormAddCategorie() {
         if (newCategory) {
             categoryId = await createCategory();
             if (!categoryId) return;
-            setTimeout(async()=>{
+            setTimeout(async () => {
                 const createdSubcategoryIds = await createSubcategories(subcategories, categoryId);
                 alert(createdSubcategoryIds.length > 0 ? 'Subcategory(ies) created successfully!' : 'No subcategories were created.');
-            },2000)
-
+            }, 2000);
         } else {
             categoryId = selectedCategory;
             const createdSubcategoryIds = await createSubcategories(subcategories, categoryId);
@@ -116,7 +147,7 @@ export default function FormAddCategorie() {
 
         setSelectedCategory('');
         setNewCategory('');
-        setSubcategories([{ name: '', produits: '' }]);
+        setSubcategories([{ name: '', produits: [] }]);
     };
 
     return (
@@ -160,13 +191,19 @@ export default function FormAddCategorie() {
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                         />
                         <label className="block text-sm font-medium mt-2">Produits:</label>
-                        <input
-                            type="text"
+                        <select
                             name="produits"
+                            multiple
                             value={subcategory.produits}
                             onChange={(e) => handleSubcategoryChange(index, e)}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                        />
+                        >
+                            {products.map(product => (
+                                <option key={product._id} value={product._id}>
+                                    {product.name}
+                                </option>
+                            ))}
+                        </select>
                         <button
                             type="button"
                             onClick={() => setSubcategories(subcategories.filter((_, i) => i !== index))}
