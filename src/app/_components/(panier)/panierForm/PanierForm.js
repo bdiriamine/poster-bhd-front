@@ -46,7 +46,7 @@ export default function PanierForm() {
         setNoItem(sendDataNoTailles(data.data || []));
       } catch (error) {
         setCommentaire("Aucun article dans le panier");
-        toast.error(" Panier vide "  );
+        toast.error(" Panier vide ");
       } finally {
         setIsLoading(false);
       }
@@ -146,11 +146,11 @@ export default function PanierForm() {
     }
   };
 
-  const totalPanierPrice = panier.reduce((acc, item) => {
+  const totalPanierPrice = (panier.reduce((acc, item) => {
     let pricePerUnit = item.tailles?.price || item.product.discountedPrice || item.product.price;
     const itemTotalPrice = (item.quantite || 1) * pricePerUnit;
     return acc + itemTotalPrice;
-  }, 0) + 7; // Adding delivery fee
+  }, 0) + 7).toFixed(3);  // Adding delivery fee and formatting to 3 decimals
 
   const estimatedDeliveryDate = new Date();
   estimatedDeliveryDate.setDate(estimatedDeliveryDate.getDate() + 3);
@@ -197,16 +197,16 @@ export default function PanierForm() {
       )}
       <div className="text-center text-gray-500 py-5">{commentaire}</div>
       <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
-  <h3 className="text-lg font-semibold text-gray-800">Total : {totalPanierPrice} DT</h3>
-  <p className="text-gray-600">Livraison estimée : {estimatedDeliveryDate.toDateString()}</p>
-  <p className="text-gray-600">Frais de livraison : 7 DT</p>
-  <button
-    onClick={handleCommand}
-    className="bg-blue-600 text-white px-6 py-3 rounded-lg mt-4 transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-  >
-    Procéder au paiement
-  </button>
-</div>
+        <h3 className="text-lg font-semibold text-gray-800">Total : {totalPanierPrice} DT</h3>
+        <p className="text-gray-600">Livraison estimée : {estimatedDeliveryDate.toDateString()}</p>
+        <p className="text-gray-600">Frais de livraison : 7 DT</p>
+        <button
+          onClick={handleCommand}
+          className="bg-blue-600 text-white px-6 py-3 rounded-lg mt-4 transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          Procéder au paiement
+        </button>
+      </div>
     </div>
   );
 }

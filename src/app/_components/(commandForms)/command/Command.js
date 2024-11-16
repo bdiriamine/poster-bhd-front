@@ -129,27 +129,28 @@ const Command = () => {
     <div className="p-4 max-w-lg mx-auto">
       {/* Step Indicator */}
       <div className="flex justify-between space-x-1 mb-4">
-        {['Adresse de Livraison', 'Méthode de Paiement', 'Confirmation'].map((title, index) => (
-          <div
-            key={index}
-            className={`flex flex-col items-center w-1/3 py-2 rounded-lg border shadow-md transition duration-300 transform hover:scale-105 ${
-              step === index + 1
-                ? 'bg-blue-500 text-white border-blue-700'
-                : step > index + 1
-                ? 'bg-green-200 text-gray-700 border-green-400'
-                : 'bg-gray-100 text-gray-600 border-gray-300'
-            }`}
-          >
-            <div className="flex items-center mb-1">
-              {index === 0 && <FaMapMarkerAlt className="text-lg" />}
-              {index === 1 && <FaCreditCard className="text-lg" />}
-              {index === 2 && <FaCheckCircle className="text-lg" />}
-            </div>
-            <h4 className="font-bold text-sm">{`Étape ${index + 1}`}</h4>
-            <p className="text-xs">{title}</p>
-          </div>
-        ))}
+  {['Adresse de Livraison', 'Méthode de Paiement', 'Confirmation'].map((title, index) => (
+    <div
+      key={index}
+      className={`flex flex-col items-center w-1/3 py-2 rounded-lg border shadow-md transition duration-300 transform hover:scale-105 ${
+        step === index + 1
+          ? 'bg-blue-500 text-white border-blue-700'
+          : step > index + 1
+          ? 'bg-green-200 text-gray-700 border-green-400'
+          : 'bg-gray-100 text-gray-600 border-gray-300'
+      }`}
+    >
+      <div className="flex items-center mb-1">
+        {index === 0 && <FaMapMarkerAlt className="text-lg" />}
+        {index === 1 && <FaCreditCard className="text-lg" />}
+        {index === 2 && <FaCheckCircle className="text-lg" />}
       </div>
+      <h4 className="font-bold text-sm text-center">{`Étape ${index + 1}`}</h4>
+      <p className="text-xs text-center">{title}</p>
+    </div>
+  ))}
+</div>
+
       {step === 1 && (
         <form onSubmit={nextStep} className="border p-4 rounded-lg shadow-md bg-white transition-transform duration-300 hover:shadow-lg">
           <h3 className="text-lg font-semibold mb-2">Étape 1: Adresse de Livraison</h3>
@@ -204,10 +205,10 @@ const Command = () => {
 
       {/* Step 2: Payment Method */}
       {step === 2 && (
-        <div className="border p-4 rounded-lg shadow-md bg-white transition-transform duration-300 hover:shadow-lg">
-          <h3 className="text-lg font-semibold mb-2">Étape 2: Méthode de Paiement</h3>
+        <div className="border p-4 rounded-lg shadow-md bg-white transition-transform duration-300 hover:shadow-lg text">
+          <h3 className="text-lg font-semibold mb-2 tex">Étape 2:</h3>
           <div className="mb-2">
-            <label className="block text-sm font-medium">Méthode de Paiement</label>
+            <label className="block text-sm font-medium text">Méthode de Paiement</label>
             <select
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
@@ -260,13 +261,13 @@ const Command = () => {
                   <Image src={item.product.imageCover} alt={item.product.name} width={50} height={50} className="mr-2" />
                   <p>{item.product.name}</p>
                 </div>
-                <p>{item.totalPrice} €</p>
+                <p>{item.totalPrice} TND</p>
               </div>
             ))}
           </div>
           <div className="mt-4">
             <h4 className="font-semibold">Prix Total (Taxe incluse)</h4>
-            <p>{totalPrice} €</p>
+            <p>{totalPrice} TND</p>
           </div>
           <button
             onClick={handleSubmit}
