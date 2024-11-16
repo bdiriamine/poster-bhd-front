@@ -49,11 +49,7 @@ export default function Navmobile() {
         </div>
         <nav className="p-4">
           <ul className="text-white">
-            <li className="mb-4" onClick={toggleMenu}>
-              <Link href="/profile" className="hover:text-blue-500">
-                Profile
-              </Link>
-            </li>
+
             <li className="mb-4" onClick={toggleMenu}>
               <Link href="/peinture-murales" className="hover:text-blue-500">
                 Peinture Mural
