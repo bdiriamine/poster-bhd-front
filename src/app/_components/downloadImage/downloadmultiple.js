@@ -120,7 +120,7 @@ export default function DownloadMultiple() {
     const zip = new JSZip();
     await Promise.all(
       selectedImages.map(async (imageURL, index) => {
-          console.log(`Downloading image ${index + 1}:`, imageURL); // Debugging log
+       
           const response = await fetch(imageURL);
           if (!response.ok) {
               console.error(`Failed to fetch image ${index + 1}`);
@@ -200,7 +200,7 @@ export default function DownloadMultiple() {
     const productImages = await Promise.all(
         selectedImages.map(imageSrc => convertToBase64(imageSrc))
     );
-    console.log("Converted Images: ", productImages); // Log the converted images
+  
 
     const payload = {
       user: userId,
@@ -209,7 +209,7 @@ export default function DownloadMultiple() {
       product:productid,
     };
   
-    console.log(payload);
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/panier`, {
         method: 'POST',

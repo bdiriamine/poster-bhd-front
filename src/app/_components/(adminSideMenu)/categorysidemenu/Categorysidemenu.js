@@ -22,7 +22,6 @@ export default function CategorySideMenu({ msg }) {
                 const categories = await response.json();
                 setData(categories.data);
             } catch (error) {
-                console.error(error);
                 alert("Failed to fetch categories");
             }
         };
@@ -48,7 +47,6 @@ export default function CategorySideMenu({ msg }) {
                 setData(data.filter((res) => res._id !== id));
                 alert("Category deleted successfully");
             } catch (error) {
-                console.error(error);
                 alert("Failed to delete this category");
             }
         }

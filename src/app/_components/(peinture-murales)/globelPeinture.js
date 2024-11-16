@@ -4,7 +4,7 @@ import SideImage from './sideImage/sideImage';
 import SideFormatandTaille from './sideFormatandTaille/sideFormatandTaille';
 
 export default function GlobelPeinture({ msg }) {
-  console.log(msg)
+
   const [img, setImg] = useState();
   const [formatdata, setForamtData] = useState();
 
@@ -17,7 +17,6 @@ const fetchProductData = async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products?sousCategoryName=${msg}`);
       const data = await response.json();
       if (response.ok) {
-        console.log(data.data)
         localStorage.setItem("productName",data.data[0]._id)
         setImg(data.data[0].imageCover)
         setForamtData(data.data[0].formats);

@@ -58,7 +58,6 @@ export default function Formlogin() {
       });
       router.push("/profile");
     } catch (error) {
-      console.error(error);
       toast.error(error.message, {
         position: "bottom-right",
         autoClose: 5000,

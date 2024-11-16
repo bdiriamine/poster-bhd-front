@@ -36,7 +36,7 @@ export default function PanierForm() {
 
         if (response.status === 500) {
           window.location.reload();
-          throw new Error("Internal Server Error");
+          throw new Error("Erreur interne du serveur");
         }
 
         const data = await response.json();
@@ -45,7 +45,7 @@ export default function PanierForm() {
         setPropsData(sendDataToProps(data.data || []));
         setNoItem(sendDataNoTailles(data.data || []));
       } catch (error) {
-        setCommentaire("No items in the cart");
+        setCommentaire("Aucun article dans le panier");
         toast.error(" Panier vide "  );
       } finally {
         setIsLoading(false);
@@ -67,7 +67,7 @@ export default function PanierForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete item");
+        throw new Error("Échec de la suppression de l'article");
       }
 
       // Update the panier state to remove the deleted item
@@ -79,11 +79,11 @@ export default function PanierForm() {
       });
 
       // Display success notification
-      toast.success("Item deleted successfully!");
+      toast.success("Article supprimé avec succès !");
     } catch (error) {
-      console.error("Error deleting item:", error);
+
       // Display error notification
-      toast.error("Error deleting item: " + error.message);
+      toast.error("Erreur lors de la suppression de l'article : " + error.message);
     }
   };
 
@@ -132,7 +132,7 @@ export default function PanierForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update quantity");
+        throw new Error("Échec de la mise à jour de la quantité");
       }
 
       setPanier((prevPanier) =>
@@ -141,9 +141,8 @@ export default function PanierForm() {
         )
       );
     } catch (error) {
-      console.error("Error updating quantity:", error);
       // Display error notification
-      toast.error("Error updating quantity: " + error.message);
+      toast.error("Erreur lors de la mise à jour de la quantité :" + error.message);
     }
   };
 
@@ -197,17 +196,17 @@ export default function PanierForm() {
         />
       )}
       <div className="text-center text-gray-500 py-5">{commentaire}</div>
-      <div className="mt-4">
-        <h3 className="text-lg font-semibold">Total: {totalPanierPrice} DT</h3>
-        <p>Estimated Delivery: {estimatedDeliveryDate.toDateString()}</p>
-        <p>Frais de livraison: 7 DT</p>
-        <button
-          onClick={handleCommand}
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
-        >
-          Proceed to Checkout
-        </button>
-      </div>
+      <div className="mt-4 p-4 bg-white rounded-lg shadow-md">
+  <h3 className="text-lg font-semibold text-gray-800">Total : {totalPanierPrice} DT</h3>
+  <p className="text-gray-600">Livraison estimée : {estimatedDeliveryDate.toDateString()}</p>
+  <p className="text-gray-600">Frais de livraison : 7 DT</p>
+  <button
+    onClick={handleCommand}
+    className="bg-blue-600 text-white px-6 py-3 rounded-lg mt-4 transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+  >
+    Procéder au paiement
+  </button>
+</div>
     </div>
   );
 }

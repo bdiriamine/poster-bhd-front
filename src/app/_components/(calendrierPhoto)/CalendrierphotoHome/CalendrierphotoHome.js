@@ -22,7 +22,6 @@ export default function CalendrierphotoHome() {
           const filteredProducts = data.data.filter(product =>
             ["Calendrier de bureau", "Calendrier mural", "Planificateur familial"].includes(product.name)
           );
-          console.log(filteredProducts)
           setProducts(filteredProducts);
         } else {
           console.error('Unexpected data format:', data);

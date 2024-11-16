@@ -89,7 +89,7 @@ export default function Navweb() {
                 <li>
                   <Link href="/admin">
                     <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
-                      admin service
+                      Admin service
                     </button>
                   </Link>
                 </li>
@@ -112,14 +112,14 @@ export default function Navweb() {
               <li>
                 <Link href="/register">
                   <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
-                    inscrivez-vous <CiCirclePlus className="ml-1" />
+                    Inscrivez-vous <CiCirclePlus className="ml-1" />
                   </button>
                 </Link>
               </li>
               <li>
                 <Link href="/login">
                   <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
-                    connectez-vous <SiSimplelogin className="ml-1" />
+                    Connectez-vous <SiSimplelogin className="ml-1" />
                   </button>
                 </Link>
               </li>

@@ -28,7 +28,6 @@ export default function CarteSidemenu() {
       const cartes = await response.json();
       setData(cartes.data);
     } catch (error) {
-      console.error(error);
       alert('Failed to fetch cartes');
     }
   };
@@ -49,7 +48,6 @@ export default function CarteSidemenu() {
         setData(data.filter(livre => livre._id !== id));
         alert('Livre deleted successfully');
       } catch (error) {
-        console.error(error);
         alert('Failed to delete this carte');
       }
     }

@@ -105,7 +105,6 @@ export default function ListeProduct({ msg }) {
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 flex-1">
           {filteredProducts.map((product) => {
             const { price, priceAfterDiscount, promotions, imageCover, name } = product;
-            console.log(product)
             const hasPromotion = promotions !== null;
 
             return (

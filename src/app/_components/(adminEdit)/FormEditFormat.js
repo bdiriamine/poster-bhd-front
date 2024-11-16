@@ -65,7 +65,6 @@ export default function FormEditFormat() {
         body: JSON.stringify(updatedFormat),
       });
       const data = await response.json();
-      console.log("Format updated successfully:", data);
     } catch (error) {
       console.error("Error updating format:", error);
     }

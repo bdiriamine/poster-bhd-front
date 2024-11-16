@@ -47,7 +47,6 @@ export default function CommandeSideMenu() {
                 setCommandes(commandes.filter(commande => commande._id !== commandeId));
                 alert('Commande deleted successfully');
             } catch (error) {
-                console.error(error);
                 alert('Failed to delete commande');
             }
         }

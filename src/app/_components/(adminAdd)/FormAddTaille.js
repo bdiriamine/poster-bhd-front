@@ -119,9 +119,6 @@ export default function FormAddTaille() {
     }, [token]);
 
     const createFormat = async () => {
-        console.log(selectedTaille);
-    
-     
         const body = {
             type: newType,
             ...(selectedTaille && { tailles: selectedTaille }) 

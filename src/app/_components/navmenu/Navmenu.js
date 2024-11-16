@@ -34,7 +34,7 @@ export default function Navmenu() {
         const data = await response.json();
         if (Array.isArray(data.data)) {
           setCategories(data.data); // Ensure data.data is an array
-          console.log(categories)
+
         } else {
           console.error('Data format is incorrect:', data);
         }

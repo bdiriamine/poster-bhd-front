@@ -9,81 +9,109 @@ const PanierLivre = ({
   totalPanierPrice,
   pricePerUnitdata,
 }) => {
-  const [quantities, setQuantities] = useState({});
-  console.log(totalPanierPrice);
-  console.log(pricePerUnitdata);
+  const [quantités, setQuantités] = useState({});
 
   useEffect(() => {
-    const savedQuantities =
-      JSON.parse(localStorage.getItem("panierQuantities")) || {};
-    setQuantities(savedQuantities);
+    const quantitésEnregistrées =
+      JSON.parse(localStorage.getItem("panierQuantités")) || {};
+    setQuantités(quantitésEnregistrées);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("panierQuantities", JSON.stringify(quantities));
-  }, [quantities]);
+    localStorage.setItem("panierQuantités", JSON.stringify(quantités));
+  }, [quantités]);
 
   const handleInputChange = (id, value) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
+    if (value < 1) return; // Empêcher de définir une valeur inférieure à 1
+    setQuantités((quantitésPrécédentes) => ({
+      ...quantitésPrécédentes,
       [id]: value,
     }));
     handleQuantityChange(value, id);
   };
 
+  const handleIncrease = (id) => {
+    const nouvelleValeur =
+      (quantités[id] || panier.find(item => item._id === id).quantite) + 1;
+    handleInputChange(id, nouvelleValeur);
+  };
+
+  const handleDecrease = (id) => {
+    const quantitéActuelle =
+      quantités[id] || panier.find(item => item._id === id).quantite;
+    if (quantitéActuelle > 1) {
+      handleInputChange(id, quantitéActuelle - 1);
+    }
+  };
+
   return (
     <div className="mb-8 px-4">
-      <h2 className="text-xl font-semibold mb-4">Panier </h2>
-      <ul className="space-y-4">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Votre Panier</h2>
+      <ul className="space-y-6">
         {panier.map((item, index) => (
           <li
             key={item._id}
-            className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border-b space-y-4 md:space-y-0"
+            className="flex flex-col md:flex-row items-start md:items-center p-4 bg-white rounded-lg shadow-md transition-transform transform hover:scale-105 border border-gray-200"
           >
-            <div className="flex flex-col md:flex-row items-start md:items-center w-full md:space-x-4">
+            <div className="flex flex-col md:flex-row items-start md:items-center w-full md:space-x-6">
               {/* Images */}
-              <div className="flex space-x-2">
+              <div className="flex space-x-3">
                 {item.images?.map((imageUrl, imgIndex) => (
                   <img
                     key={imgIndex}
                     src={imageUrl}
-                    alt={`${item.product.name} image ${imgIndex + 1}`}
-                    className="w-20 h-20 object-cover rounded"
+                    alt={`Image ${imgIndex + 1} de ${item.product.name}`}
+                    className="w-24 h-24 object-cover rounded-lg"
                   />
                 ))}
               </div>
 
-              {/* Product Details */}
+              {/* Détails du produit */}
               <div className="mt-4 md:mt-0 flex-1">
-                <h3 className="font-bold text-sm md:text-base">{item.product.name}</h3>
-                <p className="text-sm md:text-base">Price: {pricePerUnitdata[index]} DT</p>
-                <div className="flex items-center mt-2">
-                  <label className="mr-2 text-sm md:text-base">Quantity:</label>
-                  <input
-                    type="number"
-                    value={quantities[item._id] || item.quantite}
-                    min="1"
-                    onChange={(e) =>
-                      handleInputChange(item._id, parseInt(e.target.value))
-                    }
-                    className="border rounded px-2 py-1 text-sm w-16"
-                  />
+                <h3 className="font-bold text-lg text-gray-700">{item.product.name}</h3>
+                <p className="text-md text-gray-500">Prix : {pricePerUnitdata[index]} DT</p>
+                <div className="flex items-center mt-3">
+                  <label className="mr-2 text-md text-gray-600">Quantité :</label>
+                  <div className="flex items-center border rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => handleDecrease(item._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      value={quantités[item._id] || item.quantite}
+                      min="1"
+                      onChange={(e) =>
+                        handleInputChange(item._id, parseInt(e.target.value))
+                      }
+                      className="text-center w-12 px-2 py-1 border-l border-r outline-none"
+                    />
+                    <button
+                      onClick={() => handleIncrease(item._id)}
+                      className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Delete Button */}
-            <div className="self-end md:self-center mt-2 md:mt-0">
+            {/* Bouton Supprimer */}
+            <div className="self-end md:self-center mt-4 md:mt-0">
               <button
                 onClick={() => handleDeletePanierItem(item._id)}
-                className="bg-red-500 text-white px-4 py-2 rounded text-sm md:text-base"
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition text-sm font-medium shadow"
               >
-                Delete
+                Supprimer
               </button>
             </div>
           </li>
         ))}
       </ul>
+
     </div>
   );
 };

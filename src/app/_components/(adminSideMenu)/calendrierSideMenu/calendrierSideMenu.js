@@ -33,7 +33,6 @@ export default function CalendrierSideMenu() {
       const cartes = await response.json();
       setData(cartes.data);
     } catch (error) {
-      console.error(error);
       alert('Failed to fetch cartes');
     }
   };
@@ -52,7 +51,6 @@ export default function CalendrierSideMenu() {
       const promoData = await response.json();
       setPromotions(promoData.data);
     } catch (error) {
-      console.error(error);
       alert('Failed to fetch promotions');
     }
   };
@@ -73,7 +71,7 @@ export default function CalendrierSideMenu() {
         setData(data.filter(livre => livre._id !== id));
         alert('Livre deleted successfully');
       } catch (error) {
-        console.error(error);
+
         alert('Failed to delete this livre');
       }
     }
@@ -97,7 +95,7 @@ export default function CalendrierSideMenu() {
       setModalVisible(false);
       fetchCartes(); // Refresh the list
     } catch (error) {
-      console.error(error);
+
       alert('Failed to assign promotion');
     }
   };
@@ -119,7 +117,6 @@ export default function CalendrierSideMenu() {
         alert('Promotion removed successfully');
         fetchCartes(); // Refresh the list
       } catch (error) {
-        console.error(error);
         alert('Failed to remove promotion');
       }
     }

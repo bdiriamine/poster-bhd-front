@@ -25,7 +25,6 @@ export default function Formregister() {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(process.env.BASE_URL)
         try {
           const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/signup`, {
             method: 'POST',
@@ -87,7 +86,6 @@ export default function Formregister() {
                            <input type="password" name="password"   value={formData.password} onChange={handleChange} required />
                            <label>Confirmez le mot de passe </label>
                            <input type="password" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleChange} required />
-                           <Link href="/modepasseoublie" className=" hover:text-cyan-800"> Mot de passe oublie ?</Link>
                            <button className='p-3 bg-lime-800 text-white  '>    Créer un compte </button>
                        </div>
                  </form>

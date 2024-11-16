@@ -84,7 +84,6 @@ export default function ProductListCadeaux({ msg }) {
     {filteredProducts.map((product) => {
         const { price, priceAfterDiscount, promotions, imageCover, name } = product;
         const hasPromotion = promotions !== null;
-        console.log(product)
         return (
            
                 <div 

@@ -61,7 +61,7 @@ export default function Home() {
     { href: "/tableaux-muraux-avec-cadres", imgSrc: img3, title: "Tableaux muraux avec cadres", price: "70 Dt" },
     { href: "/creer-un-livre-photo", imgSrc: img4, title: "Créer un livre photo", price: "48 Dt" },
     { href: "/tirages-photo", imgSrc: img6, title: "Tirage photo", price: "5 Dt" },
-    { href: "/cadeaux-photos/Gobelet%20imprimé", imgSrc: img7, title: "Gobelet imprimé", price: "15 Dt" },
+    { href: "/cadeaux-photos/Gobelet%20imprimé", imgSrc: img7, title: "Mug personnalisé", price: "15 Dt" },
     { href: "/calendrier-photos", imgSrc: img8, title: "Calendrier photo", price: "15 Dt" },
   ];
 

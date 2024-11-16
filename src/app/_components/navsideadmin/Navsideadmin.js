@@ -14,7 +14,6 @@ export default function Navsideadmin() {
     const [activeButton, setActiveButton] = useState(''); // New state for active button
 
     useEffect(() => {
-        console.log(msg);
         // Store the current 'msg' in localStorage whenever it changes
         if (msg) {
             localStorage.setItem('msg', msg);

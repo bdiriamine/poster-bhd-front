@@ -7,7 +7,6 @@ export default function SideFormatandTaille({ setSelectedImage, formatData }) {
   const [selectedTaille, setSelectedTaille] = useState(null);
   const [expandedFormat, setExpandedFormat] = useState(null);
   const router = useRouter();
-console.log(formatData)
   // Directly use formatData prop
   useEffect(() => {
     if (formatData) {
@@ -27,7 +26,6 @@ console.log(formatData)
   const handleDownloadImage = () => {
     if (selectedTaille) {
       localStorage.setItem("taille", selectedTaille);
-      console.log("Selected Taille ID:", selectedTaille);
       router.push("/download");
     } else {
       console.log("No taille selected.");

@@ -32,7 +32,6 @@ export default function Formreset() {
           });
     
           const data = await response.json();
-          console.log(data.data)
           if (!response.ok) {
             setErrors(data.message);
             throw new Error(data.message || 'Une erreur est survenue');
@@ -47,7 +46,6 @@ export default function Formreset() {
           });
           router.push("/modepasseoublie/resetcode/nouveaumdp")
         } catch (error) {
-          console.log(error)
         toast.error(error.message.toString(),{
             position: "bottom-right",
             autoClose: 5000, // Durée avant fermeture automatique

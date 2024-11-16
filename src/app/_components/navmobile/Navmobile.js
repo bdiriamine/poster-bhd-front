@@ -102,6 +102,11 @@ export default function Navmobile() {
                 <span className="relative z-10">Profil</span>
               </button>
             </Link>
+            <Link href="/panier">
+                  <button onClick={toggleMenu} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
+                  <span className="relative z-10">Panier</span> 
+                  </button>
+                </Link>
             <button onClick={logout} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
               <span className="relative z-10">Déconnexion</span>
             </button>

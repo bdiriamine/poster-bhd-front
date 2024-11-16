@@ -33,7 +33,6 @@ export default function CadeauxSidemenu() {
       const cartes = await response.json();
       setData(cartes.data);
     } catch (error) {
-      console.error(error);
       alert('Failed to fetch cartes');
     }
   };

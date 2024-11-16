@@ -30,7 +30,6 @@ export default function Formnouveaumdp() {
           });
     
           const data = await response.json();
-          console.log(data.data)
           if (!response.ok) {
             throw new Error(data.message || 'Une erreur est survenue');
          
@@ -44,7 +43,6 @@ export default function Formnouveaumdp() {
           });
           router.push("/login")
         } catch (error) {
-          console.log(error)
         toast.error(error.message.toString(),{
             position: "bottom-right",
             autoClose: 5000, // Durée avant fermeture automatique

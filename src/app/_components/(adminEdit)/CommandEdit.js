@@ -16,7 +16,6 @@ export default function CommandEdit() {
   const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    console.log(id)
     // Fetch the command details when the component mounts
     const fetchCommand = async () => {
       setLoading(true);
@@ -28,14 +27,12 @@ export default function CommandEdit() {
         }
         );
         const data = await response.json();
-        console.log(data)
         if (response.ok) {
           setCommand(data); // Successfully set the command data
         } else {
           setError(data.message || "Failed to fetch command details");
         }
       } catch (error) {
-        console.error("Error fetching command:", error);
         setError("Error fetching command details");
       } finally {
         setLoading(false);
@@ -71,7 +68,6 @@ export default function CommandEdit() {
         toast.error(data.message || "Failed to update command"); // Error toast
       }
     } catch (error) {
-      console.error("Error updating command:", error);
       setError("Error updating command");
       toast.error("Error updating command"); // Error toast
     } finally {

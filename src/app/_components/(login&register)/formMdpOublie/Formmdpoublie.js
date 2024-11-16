@@ -31,7 +31,6 @@ export default function Formmdpoublie() {
           });
     
           const data = await response.json();
-          console.log(data.data)
           if (!response.ok) {
             setErrors(data.message);
             throw new Error(data.message || 'Une erreur est survenue');
@@ -47,7 +46,7 @@ export default function Formmdpoublie() {
           router.push("/modepasseoublie/resetcode")
           // Rediriger ou effectuer d'autres actions après l'inscription réussie
         } catch (error) {
-          console.log(error)
+         
         setErrors([  error.message.toString() ]);
         toast.error(error.message.toString(),{
             position: "bottom-right",

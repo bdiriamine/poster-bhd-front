@@ -35,7 +35,6 @@ export default function CommandProfile() {
                 setError(data.message); // Display error message
             }
         } catch (error) {
-            console.error("Error fetching commands:", error);
             setError("Error fetching commands");
         } finally {
             setLoading(false);
@@ -63,7 +62,6 @@ export default function CommandProfile() {
                 setError(data.message); // Display error message
             }
         } catch (error) {
-            console.error("Error fetching command by codeSuivi:", error);
             setError("Error fetching command by codeSuivi");
         } finally {
             setLoading(false);
