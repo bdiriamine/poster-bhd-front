@@ -71,6 +71,11 @@ export default function Navmobile() {
               </Link>
             </li>
             <li className="mb-4" onClick={toggleMenu}>
+              <Link href="/tirages-photo" className="hover:text-blue-500">
+                Tirages Photo
+              </Link>
+            </li>
+            <li className="mb-4" onClick={toggleMenu}>
               <Link href="/cadeaux-photos" className="hover:text-blue-500">
                 Cadeaux Photo
               </Link>
