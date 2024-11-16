@@ -48,7 +48,7 @@ const UserProfile = () => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-xl transform transition-all hover:scale-105 duration-300 border-4 border-transparent hover:border-teal-500 hover:animate-pulse">
+    <div className="max-w-xl mx-auto bg-white p-6 sm:p-8 rounded-xl shadow-xl transform transition-all hover:scale-105 duration-300 border-4 border-transparent hover:border-teal-500 hover:animate-pulse">
       <div className="flex items-center justify-center mb-6">
         {/* Profile Image */}
         {user.profileImg ? (
@@ -69,30 +69,30 @@ const UserProfile = () => {
       <div className="space-y-4">
         <div>
           <h2 className="text-xl font-medium text-gray-800">Nom</h2>
-          <p className="text-lg text-gray-600">{user.name}</p>
+          <p className="text-base sm:text-lg text-gray-600">{user.name}</p>
         </div>
 
         <div>
           <h2 className="text-xl font-medium text-gray-800">Email</h2>
-          <p className="text-lg text-gray-600">{user.email}</p>
+          <p className="text-base sm:text-lg text-gray-600 break-words">{user.email}</p>
         </div>
 
         {user.phone && (
           <div>
             <h2 className="text-xl font-medium text-gray-800">Téléphone</h2>
-            <p className="text-lg text-gray-600">{user.phone}</p>
+            <p className="text-base sm:text-lg text-gray-600">{user.phone}</p>
           </div>
         )}
 
         <div>
           <h2 className="text-xl font-medium text-gray-800">Type</h2>
-          <p className="text-lg text-gray-600">{user.role}</p>
+          <p className="text-base sm:text-lg text-gray-600">{user.role}</p>
         </div>
 
         <div>
           <h2 className="text-xl font-medium text-gray-800">Statut</h2>
           <p
-            className={`text-lg font-semibold ${
+            className={`text-base sm:text-lg font-semibold ${
               user.active ? 'text-cyan-600' : 'text-red-600'
             }`}
           >

@@ -176,19 +176,19 @@ export default function Downloadspace() {
       <h1 className="text-2xl font-extrabold text-gray-800 mb-4">Image Editor</h1>
       {/* Drag & Drop and File Upload Section */}
       <div
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        className="border-2 border-dashed border-gray-500 p-4 w-full max-w-lg flex flex-col items-center justify-center space-y-2 rounded-lg shadow-lg bg-white"
-      >
-        <p className="text-sm text-gray-600">Drag & drop your image here or</p>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="border border-gray-300 p-1 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-        />
-        <p className="text-sm text-gray-600">or click to upload</p>
-      </div>
+  onDrop={handleDrop}
+  onDragOver={handleDragOver}
+  className="border-2 border-dashed border-gray-500 p-4 w-full max-w-lg flex flex-col items-center justify-center space-y-2 rounded-lg shadow-lg bg-white mx-4 sm:mx-auto"
+>
+  <p className="text-sm text-gray-600">Drag & drop your image here or</p>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="border border-gray-300 p-1 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full max-w-xs"
+  />
+  <p className="text-sm text-gray-600">or click to upload</p>
+</div>
 
       {imageURL && (
         <div className="flex flex-col md:flex-row w-full max-w-5xl justify-between mt-4">
