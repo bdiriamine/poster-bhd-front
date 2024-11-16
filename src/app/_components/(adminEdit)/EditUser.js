@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams,useRouter } from 'next/navigation';
 import { useAuth } from '@/app/_utils/AuthProvider';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import Loader from '../loader/loader';
     const EditUser = () => {
         const route = useRouter()
@@ -153,7 +153,6 @@ import Loader from '../loader/loader';
                         Update User
                     </button>
                 </form>
-                <ToastContainer />
             </div>
         );
     };

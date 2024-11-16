@@ -25,3 +25,49 @@ body {
     text-wrap: balance;
   }
 }
+@keyframes jumpAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Move up */
+  }
+  100% {
+    transform: translateY(0); /* Return to original position */
+  }
+}
+
+.icon-animation {
+  animation: jumpAnimation 1.5s ease-in-out infinite;
+}
+
+.animated-border {
+  border: 2px solid transparent;
+  position: relative;
+
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #ff7f50, #1e90ff, #ff1493);
+  background-size: 300% 300%;
+  z-index: 0;
+  animation: border-move 4s infinite linear;
+}
+
+@keyframes border-move {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}

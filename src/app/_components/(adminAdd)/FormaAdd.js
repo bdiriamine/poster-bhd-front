@@ -6,7 +6,7 @@ import { useAuth } from '@/app/_utils/AuthProvider';
 
 const FormAdd = () => {
     const { token } = useAuth();
-    const router = useRouter(); // Initialize the router
+    const router = useRouter(); 
     const [user, setUser] = useState({
         name: '',
         email: '',
@@ -27,11 +27,11 @@ const FormAdd = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (user.password !== user.passwordConfirm) {
-            setError("Passwords do not match");
+            setError("Les mots de passe ne correspondent pas");
             return;
         }
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users` , {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users?ts=${new Date().getTime()}` , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,8 +41,14 @@ const FormAdd = () => {
                 credentials: 'include'
             });
 
-            if (!response.ok) throw new Error('Failed to add user');
-            toast.success('User added successfully');
+            if (!response.ok) throw new Error('Échec de l\'ajout de l\'utilisateur');
+            toast.success('Utilisateur ajouté avec succès', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
             
             setTimeout(() => {
                 router.push('/');
@@ -52,17 +58,23 @@ const FormAdd = () => {
             setError('');
         } catch (error) {
             setError(error.message);
-            toast.error(error.message);
+            toast.error(error.message, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+              });
         }
     };
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-6">Add User</h1>
+            <h1 className="text-2xl font-bold mb-6">Ajouter un utilisateur</h1>
             {error && <p className="text-red-500 mb-4">{error}</p>}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Nom</label>
                     <input
                         type="text"
                         name="name"
@@ -84,7 +96,7 @@ const FormAdd = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Phone</label>
+                    <label className="block text-sm font-medium text-gray-700">Téléphone</label>
                     <input
                         type="tel"
                         name="phone"
@@ -95,7 +107,7 @@ const FormAdd = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                    <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
                     <input
                         type="password"
                         name="password"
@@ -106,7 +118,7 @@ const FormAdd = () => {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <label className="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
                     <input
                         type="password"
                         name="passwordConfirm"
@@ -129,7 +141,7 @@ const FormAdd = () => {
                     </label>
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Profile Image URL</label>
+                    <label className="block text-sm font-medium text-gray-700">URL de l'image de profil</label>
                     <input
                         type="text"
                         name="profileImg"
@@ -146,15 +158,15 @@ const FormAdd = () => {
                         onChange={handleChange}
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-teal-500"
                     >
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
+                        <option value="user">Utilisateur</option>
+                        <option value="admin">Administrateur</option>
                     </select>
                 </div>
                 <button
                     type="submit"
                     className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition"
                 >
-                    Add User
+                    Ajouter un utilisateur
                 </button>
             </form>
         </div>

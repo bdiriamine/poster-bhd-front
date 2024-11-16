@@ -18,7 +18,7 @@ export default function FormEditProduct() {
     const [description, setDescription] = useState('');
     const [selectedPromotion, setSelectedPromotion] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
-    const [selectedFormat, setSelectedFormat] = useState('');
+    const [selectedFormats, setSelectedFormats] = useState([]); // Multiple formats
     const [imageCover, setImageCover] = useState(null);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ export default function FormEditProduct() {
 
     const fetchProductData = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/api/v1/products/${id}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${id}`);
             const data = await response.json();
             if (response.ok) {
                 setProduct(data.data);
@@ -41,7 +41,7 @@ export default function FormEditProduct() {
                 setDescription(data.data.description);
                 setSelectedPromotion(data.data.promotions[0]?._id || '');
                 setSelectedSubcategory(data.data.sousCategorie?._id || '');
-                setSelectedFormat(data.data.formats[0]?._id || '');
+                setSelectedFormats(data.data.formats.map(format => format._id) || []); // Update formats array
                 setImageCover(data.data.imageCover);
             } else {
                 console.error('Failed to fetch product data');
@@ -93,6 +93,11 @@ export default function FormEditProduct() {
         }
     };
 
+    const handleFormatChange = (e) => {
+        const selected = Array.from(e.target.selectedOptions, option => option.value);
+        setSelectedFormats(selected);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -104,17 +109,18 @@ export default function FormEditProduct() {
             formData.append('promotions', selectedPromotion);
         }
         if (selectedSubcategory) {
-            formData.append('sousCategorie', selectedSubcategory);
+            formData.append('sousCategories', selectedSubcategory);
         }
-        if (selectedFormat) {
-            formData.append('formats', selectedFormat);
-        }
+        // Append all selected formats
+        selectedFormats.forEach(format => {
+            formData.append('formats', format);
+        });
         if (imageCover) {
             formData.append('imageCover', imageCover);
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/api/v1/products/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -199,7 +205,7 @@ export default function FormEditProduct() {
                         <label className="block text-teal-600 font-semibold mb-1">Select Subcategory:</label>
                         <select
                             value={selectedSubcategory}
-                            onChange={(e) => setSelectedSubcategory(e.target.value)}
+                            onChange={(e) => setSelectedSubcategory(e.target.value || null)}
                             className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
                         >
                             <option value="">Select Subcategory</option>
@@ -211,13 +217,13 @@ export default function FormEditProduct() {
                         </select>
                     </div>
                     <div>
-                        <label className="block text-teal-600 font-semibold mb-1">Select Format:</label>
+                        <label className="block text-teal-600 font-semibold mb-1">Select Formats:</label>
                         <select
-                            value={selectedFormat}
-                            onChange={(e) => setSelectedFormat(e.target.value)}
+                            multiple
+                            value={selectedFormats}
+                            onChange={handleFormatChange}
                             className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"
                         >
-                            <option value="">Select Format</option>
                             {formats.map((format) => (
                                 <option key={format._id} value={format._id}>
                                     {format.type}
@@ -227,9 +233,9 @@ export default function FormEditProduct() {
                     </div>
                     <button
                         type="submit"
-                        className="bg-teal-600 text-white p-2 rounded-lg w-full mt-4 hover:bg-teal-700 transition duration-200"
+                        className="bg-teal-600 text-white p-2 w-full rounded-lg hover:bg-teal-700 transition duration-300"
                     >
-                        Update Product
+                        Save Changes
                     </button>
                 </form>
             </div>

@@ -197,7 +197,7 @@ export default function FormEditTaille() {
                     <label className="block text-sm font-medium">Select Promotion:</label>
                     <select
                         value={selectedPromotion}
-                        onChange={(e) => setSelectedPromotion(e.target.value)}
+                        onChange={(e) => setSelectedPromotion(e.target.value || null)}
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                     >
                         <option value="">Select a promotion</option>

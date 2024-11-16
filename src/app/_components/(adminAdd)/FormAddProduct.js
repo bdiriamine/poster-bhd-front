@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/_utils/AuthProvider";
-
+import { toast } from 'react-toastify';
+import Loader from "../loader/loader";
 export default function FormAddProduct() {
     const router = useRouter();
     const { token } = useAuth();
@@ -16,10 +17,9 @@ export default function FormAddProduct() {
     const [description, setDescription] = useState("");
     const [selectedPromotion, setSelectedPromotion] = useState();
     const [selectedSubcategory, setSelectedSubcategory] = useState();
-    const [selectedFormat, setSelectedFormat] = useState();
+    const [selectedFormats, setSelectedFormats] = useState([]); // Array to store multiple formats
     const [imageCover, setImageCover] = useState(null);
 
-    // Loading and error states
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -36,51 +36,69 @@ export default function FormAddProduct() {
     const fetchPromotions = async () => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/promotions`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/promotions?ts=${new Date().getTime()}`
             );
             const data = await response.json();
             if (response.ok) {
                 setPromotions(data.data);
             } else {
-                throw new Error("Failed to fetch promotions");
+                throw new Error("Échec de la récupération des promotions");
             }
         } catch (error) {
             setError(error.message);
-            console.error("Error fetching promotions:", error);
+            toast.error("Erreur lors de la récupération des promotions:", error , {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
         }
     };
 
     const fetchSubcategories = async () => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/subcategories`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/subcategories?ts=${new Date().getTime()}`
             );
             const data = await response.json();
             if (response.ok) {
                 setSubcategories(data.data);
             } else {
-                throw new Error("Failed to fetch subcategories");
+                throw new Error("Échec de la récupération des sous-catégories",data.message);
             }
         } catch (error) {
             setError(error.message);
-            console.error("Error fetching subcategories:", error);
+            toast.error("Échec de la récupération des sous-catégories", error , {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
         }
     };
 
     const fetchFormats = async () => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/formats`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/formats?ts=${new Date().getTime()}`
             );
             const data = await response.json();
             if (response.ok) {
                 setFormats(data.data);
             } else {
-                throw new Error("Failed to fetch formats");
+                throw new Error("Échec de la récupération des formats");
             }
         } catch (error) {
             setError(error.message);
-            console.error("Error fetching formats:", error);
+            toast.error("Échec de la récupération des formats", error , {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
         }
     };
 
@@ -92,10 +110,10 @@ export default function FormAddProduct() {
             formData.append("promotions", selectedPromotion);
         }
         if (selectedSubcategory) {
-            formData.append("sousCategorie", selectedSubcategory);
+            formData.append("sousCategories", selectedSubcategory);
         }
-        if (selectedFormat) {
-            formData.append("formats", selectedFormat);
+        if (selectedFormats.length > 0) {
+            selectedFormats.forEach((format) => formData.append("formats", format));
         }
 
         formData.append("name", name);
@@ -108,7 +126,7 @@ export default function FormAddProduct() {
 
         try {
             const response = await fetch(
-                `http://localhost:4000/api/v1/products`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products?ts=${new Date().getTime()}`,
                 {
                     method: "POST",
                     headers: {
@@ -119,19 +137,36 @@ export default function FormAddProduct() {
             );
 
             if (response.ok) {
-                alert("Product added successfully!");
+                toast.success('Product créée avec succès!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                });
                 router.push("/admin");
             } else {
-                throw new Error("Failed to add product");
+                throw new Error("Échec de l'ajout du produit");
             }
         } catch (error) {
             setError(error.message);
-            console.error("Error adding product:", error);
+            toast.error("Échec de l'ajout du produit", error , {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
         }
     };
 
+    const handleFormatChange = (e) => {
+        const selectedOptions = Array.from(e.target.selectedOptions).map((option) => option.value);
+        setSelectedFormats(selectedOptions);
+    };
+
     if (loading) {
-        return <div className="text-center">Loading...</div>;
+        return <div className="text-center"> <Loader /></div>;
     }
 
     if (error) {
@@ -142,11 +177,11 @@ export default function FormAddProduct() {
         <div className="bg-teal-900 min-h-screen flex items-center justify-center p-4">
             <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg">
                 <h2 className="text-2xl text-teal-900 font-bold text-center mb-6">
-                    Add New Product
+                Ajouter un nouveau produit
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="text-teal-900">Product Name:</label>
+                        <label className="text-teal-900">Nom du produit :</label>
                         <input
                             type="text"
                             value={name}
@@ -156,7 +191,7 @@ export default function FormAddProduct() {
                         />
                     </div>
                     <div>
-                        <label className="text-teal-900">Price:</label>
+                        <label className="text-teal-900">Prix:</label>
                         <input
                             type="number"
                             value={price}
@@ -166,7 +201,7 @@ export default function FormAddProduct() {
                         />
                     </div>
                     <div>
-                        <label className="text-teal-900">Image Cover:</label>
+                        <label className="text-teal-900">Image de couverture :</label>
                         <input
                             type="file"
                             onChange={(e) => setImageCover(e.target.files[0])}
@@ -184,15 +219,15 @@ export default function FormAddProduct() {
                         />
                     </div>
                     <div>
-                        <label className="text-teal-900">Select Promotion:</label>
+                        <label className="text-teal-900">Sélectionner une promotion :</label>
                         <select
                             value={selectedPromotion}
                             onChange={(e) =>
-                                setSelectedPromotion(e.target.value || null)
-                            } // Ensure null is set if no value is selected
+                                setSelectedPromotion(e.target.value )
+                            }
                             className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-600"
                         >
-                            <option value="">Select Promotion</option>
+                            <option value="">Sélectionner Promotion</option>
                             {promotions.map((promotion) => (
                                 <option key={promotion._id} value={promotion._id}>
                                     {promotion.name}
@@ -201,14 +236,14 @@ export default function FormAddProduct() {
                         </select>
                     </div>
                     <div>
-                        <label className="text-teal-900">Select Subcategory:</label>
+                        <label className="text-teal-900">Sélectionner une sous-catégorie :</label>
                         <select
                             value={selectedSubcategory}
                             onChange={(e) => setSelectedSubcategory(e.target.value)}
                             className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-600"
                             required
                         >
-                            <option value="">Select Subcategory</option>
+                            <option value="">Sélectionner Subcategory</option>
                             {subcategories.map((subcategory) => (
                                 <option key={subcategory._id} value={subcategory._id}>
                                     {subcategory.name}
@@ -217,14 +252,13 @@ export default function FormAddProduct() {
                         </select>
                     </div>
                     <div>
-                        <label className="text-teal-900">Select Format:</label>
+                        <label className="text-teal-900">Sélectionner des formats (plusieurs):</label>
                         <select
-                            value={selectedFormat}
-                            onChange={(e) => setSelectedFormat(e.target.value)}
+                            multiple // Allow multiple selections
+                            value={selectedFormats}
+                            onChange={handleFormatChange}
                             className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-600"
-                            required
                         >
-                            <option value="">Select Format</option>
                             {formats.map((format) => (
                                 <option key={format._id} value={format._id}>
                                     {format.type}
@@ -236,7 +270,7 @@ export default function FormAddProduct() {
                         type="submit"
                         className="w-full bg-teal-600 text-white p-2 rounded-lg hover:bg-teal-500 transition duration-300 mt-4"
                     >
-                        Add Product
+                         Ajouter le produit
                     </button>
                 </form>
             </div>

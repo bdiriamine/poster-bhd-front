@@ -12,10 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
-  
-    console.log('Stored token:', storedToken);
-    console.log('Stored user data:', userData);
-  
+
     if (storedToken) {
       setToken(storedToken);
       verifyToken(storedToken); // Call to verify the token
@@ -34,7 +31,6 @@ export const AuthProvider = ({ children }) => {
       setToken(token);
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(userData));
-      console.log('User logged in:', userData);
     } else {
       console.error('No token received during login');
     }
@@ -52,7 +48,6 @@ export const AuthProvider = ({ children }) => {
       });
   
       const result = await response.json();
-      console.log('API Response:', result); // Log the entire response
   
       // Adjust here to access the user object correctly
       if (!response.ok || !result.data) {

@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/app/_utils/AuthProvider';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export default function FormAddCategorie() {
     const { token } = useAuth();
@@ -14,7 +15,7 @@ export default function FormAddCategorie() {
     // Fetch categories
     const fetchCategories = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories?ts=${new Date().getTime()}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,17 +27,29 @@ export default function FormAddCategorie() {
             if (response.ok) {
                 setCategories(data.data);
             } else {
-                console.error('Failed to fetch categories:', data.error);
+                toast.error('Échec de la récupération des catégories: ' + data.message, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                });
             }
         } catch (error) {
-            console.error('Error fetching categories:', error);
+            toast.error('Échec de la récupération des catégories: ' + error, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
         }
     };
 
     // Fetch products
     const fetchProducts = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products?ts=${new Date().getTime()}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,11 +60,24 @@ export default function FormAddCategorie() {
             const data = await response.json();
             if (response.ok) {
                 setProducts(data.data);
+
             } else {
-                console.error('Failed to fetch products:', data.error);
+                toast.error('Échec de la récupération des produits: ' + data.error, {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                });
             }
         } catch (error) {
-            console.error('Error fetching products:', error);
+            toast.error('Échec de la récupération des produits: ' + error, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
         }
     };
 
@@ -61,7 +87,7 @@ export default function FormAddCategorie() {
     }, [token]);
 
     const createCategory = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/categories?ts=${new Date().getTime()}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -72,9 +98,23 @@ export default function FormAddCategorie() {
 
         const data = await response.json();
         if (!response.ok) {
-            alert('Error creating category: ' + (data.error || 'Unknown error'));
+            toast.error('Erreur lors de la création de la catégorie: ' + (data.message || 'Erreur inconnue'), {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
             return null;
         }
+
+        toast.success('Catégorie créée avec succès!', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+        });
         return data.data._id;
     };
 
@@ -95,7 +135,25 @@ export default function FormAddCategorie() {
             return await response.json();
         }));
 
-        return responses.filter(result => result.status === 'success').map(result => result.data._id);
+        const createdSubcategories = responses.filter(result => result.status === 'success').map(result => result.data._id);
+        if (createdSubcategories.length > 0) {
+            toast.success('Sous-catégorie(s) créée(s) avec succès!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
+        } else {
+            toast.error('Aucune sous-catégorie n\'a été créée.', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
+        }
+        return createdSubcategories;
     };
 
     const handleAddSubcategory = () => {
@@ -115,20 +173,8 @@ export default function FormAddCategorie() {
         setSubcategories(newSubcategories);
     };
 
-    const validateInputs = () => {
-        return (
-            (newCategory || selectedCategory) &&
-            subcategories.every(subcategory => subcategory.name)
-        );
-    };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        if (!validateInputs()) {
-            alert('Please fill in all fields.');
-            return;
-        }
 
         let categoryId;
 
@@ -136,13 +182,11 @@ export default function FormAddCategorie() {
             categoryId = await createCategory();
             if (!categoryId) return;
             setTimeout(async () => {
-                const createdSubcategoryIds = await createSubcategories(subcategories, categoryId);
-                alert(createdSubcategoryIds.length > 0 ? 'Subcategory(ies) created successfully!' : 'No subcategories were created.');
+                await createSubcategories(subcategories, categoryId);
             }, 2000);
         } else {
             categoryId = selectedCategory;
-            const createdSubcategoryIds = await createSubcategories(subcategories, categoryId);
-            alert(createdSubcategoryIds.length > 0 ? 'Subcategory(ies) created successfully!' : 'No subcategories were created.');
+            await createSubcategories(subcategories, categoryId);
         }
 
         setSelectedCategory('');
@@ -152,18 +196,18 @@ export default function FormAddCategorie() {
 
     return (
         <div className="max-w-2xl mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Add New Category</h1>
+            <h1 className="text-2xl font-bold mb-4">Ajouter une nouvelle catégorie</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium">Name:</label>
+                    <label className="block text-sm font-medium">Nom :</label>
                     <input
                         type="text"
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
-                        placeholder="Enter new category or select existing"
+                        placeholder="Entrez une nouvelle catégorie ou sélectionnez une catégorie existante"
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                     />
-                    <p className="mt-2 text-sm">or</p>
+                    <p className="mt-2 text-sm">ou</p>
                     <select
                         value={selectedCategory}
                         onChange={(e) => {
@@ -172,22 +216,21 @@ export default function FormAddCategorie() {
                         }}
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                     >
-                        <option value="">Select existing category</option>
+                        <option value="">Sélectionner une catégorie existante</option>
                         {categories.map((category) => (
                             <option key={category._id} value={category._id}>{category.name}</option>
                         ))}
                     </select>
                 </div>
-                <h3 className="text-lg font-semibold">Subcategories:</h3>
+                <h3 className="text-lg font-semibold">Sous-catégories :</h3>
                 {subcategories.map((subcategory, index) => (
                     <div key={index} className="border p-4 rounded-md mb-2">
-                        <label className="block text-sm font-medium">Name:</label>
+                        <label className="block text-sm font-medium">Nom :</label>
                         <input
                             type="text"
                             name="name"
                             value={subcategory.name}
                             onChange={(e) => handleSubcategoryChange(index, e)}
-                            required
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                         />
                         <label className="block text-sm font-medium mt-2">Produits:</label>
@@ -198,33 +241,24 @@ export default function FormAddCategorie() {
                             onChange={(e) => handleSubcategoryChange(index, e)}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
                         >
-                            {products.map(product => (
-                                <option key={product._id} value={product._id}>
-                                    {product.name}
-                                </option>
+                            {products.map((product) => (
+                                <option key={product._id} value={product._id}>{product.name}</option>
                             ))}
                         </select>
-                        <button
-                            type="button"
-                            onClick={() => setSubcategories(subcategories.filter((_, i) => i !== index))}
-                            className="mt-2 text-red-600 hover:underline"
-                        >
-                            Remove Subcategory
-                        </button>
                     </div>
                 ))}
                 <button
                     type="button"
                     onClick={handleAddSubcategory}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md mt-4 hover:bg-blue-700 focus:outline-none focus:ring"
                 >
-                    Add Subcategory
-                </button>
+                    Ajouter une sous-catégorie
+                    </button>
                 <button
                     type="submit"
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                    className="w-full px-4 py-2 bg-green-500 text-white rounded-md mt-4 hover:bg-green-700 focus:outline-none focus:ring"
                 >
-                    Submit
+                    Soumettre
                 </button>
             </form>
         </div>

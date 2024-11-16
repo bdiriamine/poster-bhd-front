@@ -1,99 +1,132 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import styles from  "./navweb.module.css"
+"use client";
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { IoLockClosedOutline } from "react-icons/io5";
 import { BsInfoCircle } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
-import { MdWork } from "react-icons/md";
 import { CiCirclePlus } from "react-icons/ci";
 import { SiSimplelogin } from "react-icons/si";
 import { useAuth } from '@/app/_utils/AuthProvider';
 
 export default function Navweb() {
-
   const [openMenu, setOpenMenu] = useState(null);
-  const { user, logout,loading } = useAuth();
-  const[role,setRole]=useState(null);
+  const { user, logout } = useAuth();
+
   const handleButtonClick = (menu) => {
     setOpenMenu(openMenu === menu ? null : menu);
   };
+
   const handleClickOutside = (e) => {
-    if (e.target.closest(`.${styles.navbar}`)) return;
+    if (e.target.closest('.navbar')) return;
     setOpenMenu(null);
   };
+
   useEffect(() => {
-    console.log(user?.role,loading)
     document.addEventListener('click', handleClickOutside);
     return () => {
       document.removeEventListener('click', handleClickOutside);
-
     };
   }, []);
 
   return (
     <header>
-       <nav className={styles.navbar}>
-            <div >
-                <ul className={styles.btn}>
-                    <li><Link href={"/login"} > <button className={styles.logo}>Clientèle privée <IoLockClosedOutline  className={styles.mgl}/> </button> </Link></li>
-                    <li><Link href={"/login"} > <button className={styles.logo}>Service Client <BsInfoCircle className={styles.mgl} /> </button></Link></li>
-                </ul>
-            </div>
-            <div className="relative inline-block text-left">
-            <button
-              onClick={() => handleButtonClick('menu1')}
-              className=" text-white rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-600 p-3 border-none	"
-            >
-              Mon Compte
-            </button>
-      
-            {openMenu === 'menu1' && !user && (
+      <nav className="navbar flex justify-end items-center gap-2 p-2  text-white">
+        <div>
+          <ul className="flex items-center">
+            <li>
+              <Link href="/chat">
+                <button className="flex items-center border-l border-r border-gray-300 p-2 text-sm font-bold">
+                  Service Client <BsInfoCircle className="ml-1" />
+                </button>
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left">
+  <button
+    onClick={() => handleButtonClick('menu1')}
+    className="text-white rounded-md p-2 text-sm font-bold focus:outline-none"
+  >
+    Mon Compte
+  </button>
 
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                <ul>
-                    <li className={styles.navlink}><Link  href={"/login"}  >Mon Compte      </Link> <FaRegUserCircle /> </li>
-                    <li className={styles.navlink}><Link  href={"/login"}> Statu de command  </Link> <TbTruckDelivery /> </li>
-                    <li className={styles.navlink}><Link  href={"/login"}>Mes Projet sauvgarder   </Link>  <MdWork /> </li>
-                </ul>   
-              </div>
-            )}
-                        {openMenu === 'menu1' && user && (
-                          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
-                            <ul>
-                                <li className={styles.navlink}><Link  href={"/profile"}  >Mon Compte      </Link> <FaRegUserCircle /> </li>
-                                <li className={styles.navlink}><Link  href={"/profile"}> Statu de command  </Link> <TbTruckDelivery /> </li>
-                                <li className={styles.navlink}><Link  href={"/profile"}>Mes Projet sauvgarder   </Link>  <MdWork /> </li>
-                            </ul>   
-                          </div>
-                          )}       
-          </div>
-          <div>
-            
-          </div>
-            <div className={styles.right}>
-              
-                {user ? (
-              <ul className={styles.btn}> 
-               {user.role==="admin" ?  <li><Link  href="/admin">   <button  className={styles.logo}> admin service</button> </Link></li> :null}
+  {openMenu === 'menu1' && (
+    <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 text-black">
+      <ul>
+        {user ? (
+          <>
+            <li className="flex items-center p-2 text-sm hover:bg-gray-200">
+              <Link href="/profile">Mon Compte</Link>
+              <FaRegUserCircle className="ml-1" />
+            </li>
+            <li className="flex items-center p-2 text-sm hover:bg-gray-200">
+              <Link href="/commande">Statut de la commande</Link>
+              <TbTruckDelivery className="ml-1" />
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="flex items-center p-2 text-sm hover:bg-gray-200">
+              <Link href="/login">Mon Compte</Link>
+              <FaRegUserCircle className="ml-1" />
+            </li>
+            <li className="flex items-center p-2 text-sm hover:bg-gray-200">
+              <Link href="/login">Statut de la commande</Link>
+              <TbTruckDelivery className="ml-1" />
+            </li>
+          </>
+        )}
+      </ul>
+    </div>
+  )}
+</div>
+        </div>
+        <div className="flex items-center">
+          {user ? (
+            <ul className="flex items-center gap-2">
+              {user.role === "admin" && (
                 <li>
-                  <button onClick={logout} className={styles.logo}> Déconnexion</button>
+                  <Link href="/admin">
+                    <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
+                      admin service
+                    </button>
+                  </Link>
                 </li>
-               
-              </ul>
-            ) : (
-              <ul className={styles.btn}>
-              <li> <Link  href="/register"> <button className={styles.logo}> inscrivez-vous <CiCirclePlus className={styles.mgl} /> </button></Link></li>
-              <li> <Link  href="/login"><button className={styles.logo}> connectez-vous <SiSimplelogin  className={styles.mgl}/> </button> </Link></li>
-           </ul>
-            )}
-             {/* <ul className={styles.btn}>
-                <li> <Link  href={"/register"}> <button className={styles.logo}> inscrivez-vous <CiCirclePlus className={styles.mgl} /> </button></Link></li>
-                <li>  <Link  href={"/login"}><button className={styles.logo}> connectez-vous <SiSimplelogin  className={styles.mgl}/> </button> </Link></li>
-             </ul> */}
-            </div>
-        </nav> 
+              )}
+              <li>
+                <Link href="/panier">
+                  <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
+                    Panier
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <button onClick={logout} className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
+                  Déconnexion
+                </button>
+              </li>
+            </ul>
+          ) : (
+            <ul className="flex items-center gap-2">
+              <li>
+                <Link href="/register">
+                  <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
+                    inscrivez-vous <CiCirclePlus className="ml-1" />
+                  </button>
+                </Link>
+              </li>
+              <li>
+                <Link href="/login">
+                  <button className="flex items-center border-l border-gray-300 p-2 text-sm font-bold">
+                    connectez-vous <SiSimplelogin className="ml-1" />
+                  </button>
+                </Link>
+              </li>
+            </ul>
+          )}
+        </div>
+      </nav>
     </header>
-  )
+  );
 }
