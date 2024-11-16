@@ -62,12 +62,12 @@ export default function Navmobile() {
             </li>
             <li className="mb-4" onClick={toggleMenu}>
               <Link href="/creer-un-livre-photo" className="hover:text-blue-500">
-                Creer Livre
+                Créer Livre
               </Link>
             </li>
             <li className="mb-4" onClick={toggleMenu}>
               <Link href="/calendrier-photos" className="hover:text-blue-500">
-                Calendrie photo
+                Calendrier photo
               </Link>
             </li>
             <li className="mb-4" onClick={toggleMenu}>
@@ -77,10 +77,7 @@ export default function Navmobile() {
             </li>
             {user?.role === "admin" && (
               <ul>
-                <li><Link href="/admin"> admin service</Link></li>
-                <li><button onClick={logout} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
-                  <span className="relative z-10">Déconnexion</span>
-                </button></li>
+                <li><Link href="/admin"> Service Admin</Link></li>
               </ul>
             )}
           </ul>
@@ -89,12 +86,12 @@ export default function Navmobile() {
           <div className="p-4">
             <Link href="/register">
               <button onClick={toggleMenu} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
-                <span className="relative z-10">Register</span>
+                <span className="relative z-10">S'inscrire</span>
               </button>
             </Link>
             <Link href="/login">
               <button onClick={toggleMenu} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
-                <span className="relative z-10">Login</span>
+                <span className="relative z-10">Se connecter</span>
               </button>
             </Link>
           </div>
@@ -102,11 +99,11 @@ export default function Navmobile() {
           <div className="p-4">
             <Link href="/profile">
               <button onClick={toggleMenu} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
-                <span className="relative z-10">Profile</span>
+                <span className="relative z-10">Profil</span>
               </button>
             </Link>
             <button onClick={logout} className="relative w-full text-white py-2 rounded-lg transition-all transform hover:scale-105 mb-2 overflow-hidden animated-border">
-              <span className="relative z-10">Logout</span>
+              <span className="relative z-10">Déconnexion</span>
             </button>
           </div>
         )}
