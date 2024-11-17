@@ -166,7 +166,7 @@ export default function PanierForm() {
   if (panier.length === 0) {
     return (
       <div className="container mx-auto my-10 p-8 bg-white rounded-lg shadow-lg">
-        <div className="text-center text-gray-500 py-5">No items in the cart</div>
+        <div className="text-center text-gray-500 py-5">Aucun article dans le panier</div>
       </div>
     );
   }

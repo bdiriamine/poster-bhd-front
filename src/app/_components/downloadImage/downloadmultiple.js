@@ -38,12 +38,12 @@ export default function DownloadMultiple() {
             url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/calendriePhoto/${idlivre}`;
             break;
           default:
-            throw new Error('Unknown product type');
+            throw new Error('Type de produit inconnu');
         }
         
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error('Failed to fetch price data');
+          throw new Error('Échec de la récupération des données ');
         }
         
         const data = await response.json();
@@ -70,7 +70,7 @@ export default function DownloadMultiple() {
     );
 
     if (selectedImages.length + imageFiles.length > maxImages) {
-      alert(`You can only upload a maximum of ${maxImages} images.`);
+      alert(`Vous ne pouvez télécharger qu'un maximum de ${maxImages} images.`);
       return;
     }
 
@@ -123,7 +123,7 @@ export default function DownloadMultiple() {
        
           const response = await fetch(imageURL);
           if (!response.ok) {
-              console.error(`Failed to fetch image ${index + 1}`);
+            console.error(`Échec de la récupération de l'image ${index + 1}`);
               return; // Skip this image if it fails
           }
           const blob = await response.blob();
@@ -136,27 +136,32 @@ export default function DownloadMultiple() {
     });
 };
 
-  const applyFilters = (imageSrc, filters) => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.src = imageSrc;
+const applyFilters = (imageSrc, filters) => {
+  const canvas = canvasRef.current;
+  if (!canvas) {
+    console.error("Canvas not found");
+    return;
+  }
 
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
+  const ctx = canvas.getContext("2d");
+  const img = new Image();
+  img.src = imageSrc;
 
-      ctx.filter = `
-        brightness(${filters.brightness}%)
-        contrast(${filters.contrast}%)
-        blur(${filters.blur}px)
-        hue-rotate(${filters.hue}deg)
-        saturate(${filters.saturation}%)
-        grayscale(${filters.grayscale}%)
-      `;
-      ctx.drawImage(img, 0, 0);
-    };
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.filter = `
+      brightness(${filters.brightness}%)
+      contrast(${filters.contrast}%)
+      blur(${filters.blur}px)
+      hue-rotate(${filters.hue}deg)
+      saturate(${filters.saturation}%)
+      grayscale(${filters.grayscale}%)
+    `;
+    ctx.drawImage(img, 0, 0);
   };
+};
 
   const handleFilterChange = (index, e) => {
     const { name, value } = e.target;
@@ -221,13 +226,13 @@ export default function DownloadMultiple() {
       });
   
       if (!response.ok) {
-        throw new Error('Failed to add to cart');
+        throw new Error('Échec de l\'ajout au panier');
       }
   
-      alert("Images added to cart!");
+      alert("Images ajoutées au panier !");
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      alert("Error adding to cart.");
+      console.error("Erreur lors de l'ajout au panier :", erreur);
+      alert("Erreur lors de l'ajout au panier.");
     }
   };
 
@@ -245,7 +250,7 @@ export default function DownloadMultiple() {
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
       >
-        Drag & Drop Images Here or Click to Upload
+         Glissez & Déposez les Images Ici ou Cliquez pour Télécharger
         <input
           type="file"
           multiple
@@ -264,73 +269,138 @@ export default function DownloadMultiple() {
         </div>
       )}
   
-      {selectedImages.length > 0 && (
-        <div className="grid md:grid-cols-5 gap-4">
-          {selectedImages.map((imageURL, index) => (
-            <div
-              key={index}
-              className="relative group transition-transform transform hover:scale-105 border-2 border-gray-300 bg-slate-800 rounded-lg p-2"
-            >
-              <div className="bg-gray-100">
-                <img
-                  src={imageURL}
-                  alt={`Preview ${index}`}
-                  className="w-full h-auto max-w-xs rounded-lg shadow-lg mx-auto bg-gray-100"
-                  style={{
-                    filter: `
-                      brightness(${imageFilters[index]?.brightness || 100}%) 
-                      contrast(${imageFilters[index]?.contrast || 100}%) 
-                      blur(${imageFilters[index]?.blur || 0}px) 
-                      hue-rotate(${imageFilters[index]?.hue || 0}deg) 
-                      saturate(${imageFilters[index]?.saturation || 100}%) 
-                      grayscale(${imageFilters[index]?.grayscale || 0}%)
-                    `,
-                  }}
-                />
-                <button
-                  onClick={() => removeImage(index)}
-                  className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-1"
-                >
-                  X
-                </button>
-              </div>
-  
-              <div className="flex flex-col mt-2">
-                {Object.keys(imageFilters[index]).map((filter) => (
-                  <input
-                    key={filter}
-                    type="range"
-                    name={filter}
-                    min={filter === "blur" ? 0 : 0}
-                    max={filter === "brightness" || filter === "contrast" ? 200 : 100}
-                    value={imageFilters[index][filter]}
-                    onChange={(e) => handleFilterChange(index, e)}
-                    className="mb-2"
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+  {selectedImages.length > 0 && (
+  <div className="grid md:grid-cols-5 gap-4">
+    {selectedImages.map((imageURL, index) => (
+      <div
+        key={index}
+        className="relative group transition-transform transform hover:scale-105 border-2 border-gray-300 bg-slate-800 rounded-lg p-2"
+      >
+        <div className="bg-gray-100">
+          <img
+            src={imageURL}
+            alt={`Preview ${index}`}
+            className="w-full h-auto max-w-xs rounded-lg shadow-lg mx-auto bg-gray-100"
+            style={{
+              filter: `
+                brightness(${imageFilters[index]?.brightness || 100}%) 
+                contrast(${imageFilters[index]?.contrast || 100}%) 
+                blur(${imageFilters[index]?.blur || 0}px) 
+                hue-rotate(${imageFilters[index]?.hue || 0}deg) 
+                saturate(${imageFilters[index]?.saturation || 100}%) 
+                grayscale(${imageFilters[index]?.grayscale || 0}%)
+              `,
+            }}
+          />
+          <button
+            onClick={() => removeImage(index)}
+            className="absolute top-2 right-2 text-white bg-red-500 rounded-full p-1"
+          >
+            X
+          </button>
         </div>
-      )}
+
+        <div className="flex flex-col mt-2">
+          {/* Brightness */}
+          <label htmlFor={`brightness-${index}`} className="text-sm text-white">Brightness</label>
+          <input
+            id={`brightness-${index}`}
+            type="range"
+            name="brightness"
+            min={0}
+            max={200}
+            value={imageFilters[index]?.brightness || 100}
+            onChange={(e) => handleFilterChange(index, e)}
+            className="mb-2"
+          />
+
+          {/* Contrast */}
+          <label htmlFor={`contrast-${index}`} className="text-sm text-white">Contrast</label>
+          <input
+            id={`contrast-${index}`}
+            type="range"
+            name="contrast"
+            min={0}
+            max={200}
+            value={imageFilters[index]?.contrast || 100}
+            onChange={(e) => handleFilterChange(index, e)}
+            className="mb-2"
+          />
+
+          {/* Blur */}
+          <label htmlFor={`blur-${index}`} className="text-sm text-white">Blur</label>
+          <input
+            id={`blur-${index}`}
+            type="range"
+            name="blur"
+            min={0}
+            max={10}  // Max blur set to 10px for practical usage
+            value={imageFilters[index]?.blur || 0}
+            onChange={(e) => handleFilterChange(index, e)}
+            className="mb-2"
+          />
+
+          {/* Hue Rotate */}
+          <label htmlFor={`hue-${index}`} className="text-sm text-white">Hue Rotate</label>
+          <input
+            id={`hue-${index}`}
+            type="range"
+            name="hue"
+            min={0}
+            max={360}  // Full hue rotate range from 0 to 360 degrees
+            value={imageFilters[index]?.hue || 0}
+            onChange={(e) => handleFilterChange(index, e)}
+            className="mb-2"
+          />
+
+          {/* Saturation */}
+          <label htmlFor={`saturation-${index}`} className="text-sm text-white">Saturation</label>
+          <input
+            id={`saturation-${index}`}
+            type="range"
+            name="saturation"
+            min={0}
+            max={200}  // Allowing full saturation from 0% to 200%
+            value={imageFilters[index]?.saturation || 100}
+            onChange={(e) => handleFilterChange(index, e)}
+            className="mb-2"
+          />
+
+          {/* Grayscale */}
+          <label htmlFor={`grayscale-${index}`} className="text-sm text-white">Grayscale</label>
+          <input
+            id={`grayscale-${index}`}
+            type="range"
+            name="grayscale"
+            min={0}
+            max={100}  // Grayscale range from 0% to 100%
+            value={imageFilters[index]?.grayscale || 0}
+            onChange={(e) => handleFilterChange(index, e)}
+            className="mb-2"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+)}
   
       <div className="mt-4 flex justify-between">
         <button
           onClick={addToCart}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
-          Add to Cart
+          Ajouter au Panier
         </button>
         <button
           onClick={handleDownloadAll}
           className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
         >
-          Download All
+          Télécharger Tout
         </button>
       </div>
       
       <div className="mt-4 text-white">
-        {selectedImages.length} / {maxImages} images uploaded
+        {selectedImages.length} / {maxImages} Télécharger l'image
       </div>
       
       {error && <div className="text-red-500 mt-4">{error}</div>}

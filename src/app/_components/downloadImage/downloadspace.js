@@ -1,10 +1,11 @@
-"use client"; // Ensure client-side behavior
+"use client"; // Assurez le comportement côté client
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/app/_utils/AuthProvider';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from 'next/navigation';
+
 export default function Downloadspace() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
@@ -20,15 +21,16 @@ export default function Downloadspace() {
   const canvasRef = useRef(null);
   const { token, user } = useAuth();
   const router = useRouter(); 
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setSelectedImage(file);
       const objectURL = URL.createObjectURL(file);
       setImageURL(objectURL);
-      toast.success("Image uploaded successfully!");
+      toast.success("Image téléchargée avec succès !");
     } else {
-      toast.error("Please upload a valid image file.");
+      toast.error("Veuillez télécharger un fichier image valide.");
     }
   };
 
@@ -39,9 +41,9 @@ export default function Downloadspace() {
       setSelectedImage(file);
       const objectURL = URL.createObjectURL(file);
       setImageURL(objectURL);
-      toast.success("Image uploaded successfully!");
+      toast.success("Image téléchargée avec succès !");
     } else {
-      toast.error("Please drop a valid image file.");
+      toast.error("Veuillez déposer un fichier image valide.");
     }
   };
 
@@ -101,7 +103,7 @@ export default function Downloadspace() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    toast.success("Image downloaded successfully!");
+    toast.success("Image téléchargée avec succès !");
   };
 
   const handleAddToPanier = async () => {
@@ -123,14 +125,14 @@ export default function Downloadspace() {
           if (data.status === 'success') {
             formData.append('totalPrice', data.data?.price);
           } else {
-            toast.error("Failed to fetch image information");
+            toast.error("Échec de la récupération des informations de l'image");
           }
 
           if (imageToAdd.startsWith('data:image')) {
             formData.append('images', imageToAdd);
           } else {
             const imageBlob = await fetch(imageToAdd).then((res) => {
-              if (!res.ok) throw new Error("Image fetching failed");
+              if (!res.ok) throw new Error("Échec du téléchargement de l'image");
               return res.blob();
             });
             formData.append('images', imageBlob, selectedImage.name);
@@ -148,63 +150,63 @@ export default function Downloadspace() {
           });
 
           if (response.ok) {
-            toast.success("Product added to panier successfully!");
-            router.push('/panier')
+            toast.success("Produit ajouté au panier avec succès !");
+            router.push('/panier');
           } else {
             const errorData = await response.json();
-            console.error("Error adding product:", errorData.errors || errorData);
+            console.error("Erreur lors de l'ajout du produit :", errorData.errors || errorData);
 
-              toast.error("Ton token a expiré. Veuillez vous connecter s'il vous plaît.");
-              window.location.reload()
+            toast.error("Votre token a expiré. Veuillez vous connecter, s'il vous plaît.");
+            window.location.reload();
           }
         } catch (error) {
-          console.error("Error adding to panier:", error);
-          toast.error("An error occurred while adding to panier. Please try again.");
+          console.error("Erreur lors de l'ajout au panier :", error);
+          toast.error("Une erreur s'est produite lors de l'ajout au panier. Veuillez réessayer.");
         } finally {
           setLoading(false);
         }
       } else {
-        toast.warning("No image available to add to panier.");
+        toast.warning("Aucune image disponible pour ajouter au panier.");
       }
     } else {
-      toast.warning("Taille or product name not found in local storage.");
+      toast.warning("Taille ou nom de produit non trouvé dans le local storage.");
     }
   };
 
   return (
     <div className="flex flex-col items-center p-4 bg-gradient-to-r from-purple-100 to-blue-200 min-h-screen">
-      <h1 className="text-2xl font-extrabold text-gray-800 mb-4">Image Editor</h1>
-      {/* Drag & Drop and File Upload Section */}
+      <h1 className="text-2xl font-extrabold text-gray-800 mb-4">Éditeur d'images</h1>
+      {/* Section de glisser-déposer et de téléchargement de fichier */}
       <div
-  onDrop={handleDrop}
-  onDragOver={handleDragOver}
-  className="border-2 border-dashed border-gray-500 p-4 w-full max-w-lg flex flex-col items-center justify-center space-y-2 rounded-lg shadow-lg bg-white mx-4 sm:mx-auto"
->
-  <p className="text-sm text-gray-600">Drag & drop your image here or</p>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handleImageUpload}
-    className="border border-gray-300 p-1 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full max-w-xs"
-  />
-  <p className="text-sm text-gray-600">or click to upload</p>
-</div>
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        className="border-2 border-dashed border-gray-500 p-4 w-full max-w-lg flex flex-col items-center justify-center space-y-2 rounded-lg shadow-lg bg-white mx-4 sm:mx-auto"
+      >
+        <p className="text-sm text-gray-600">Glissez-déposez votre image ici ou</p>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="border border-gray-300 p-1 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full max-w-xs"
+        />
+        <p className="text-sm text-gray-600">ou cliquez pour télécharger</p>
+      </div>
 
       {imageURL && (
         <div className="flex flex-col md:flex-row w-full max-w-5xl justify-between mt-4">
-          {/* Adjustments Section */}
+          {/* Section des ajustements */}
           <div className="flex flex-col space-y-4 bg-gray-50 p-4 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-lg font-semibold text-gray-700">Adjustments</h2>
-            {/* Sliders for adjustments */}
+            <h2 className="text-lg font-semibold text-gray-700">Ajustements</h2>
+            {/* Curseurs pour les ajustements */}
             {[
-              { label: 'Brightness', value: brightness, setter: setBrightness, min: 0, max: 200 },
-              { label: 'Contrast', value: contrast, setter: setContrast, min: 0, max: 200 },
-              { label: 'Blur', value: blur, setter: setBlur, min: 0, max: 10 },
+              { label: 'Luminosité', value: brightness, setter: setBrightness, min: 0, max: 200 },
+              { label: 'Contraste', value: contrast, setter: setContrast, min: 0, max: 200 },
+              { label: 'Flou', value: blur, setter: setBlur, min: 0, max: 10 },
               { label: 'Saturation', value: saturation, setter: setSaturation, min: 0, max: 200 },
-              { label: 'Grayscale', value: grayscale, setter: setGrayscale, min: 0, max: 100 },
+              { label: 'Gris', value: grayscale, setter: setGrayscale, min: 0, max: 100 },
             ].map(({ label, value, setter, min, max }) => (
               <label key={label} className="flex items-center space-x-2 text-sm">
-                <span>{label}:</span>
+                <span>{label} :</span>
                 <input
                   type="range"
                   min={min}
@@ -216,51 +218,43 @@ export default function Downloadspace() {
               </label>
             ))}
             <div className="flex items-center space-x-2 text-sm">
-              <label>Rotation:</label>
+              <label>Rotation :</label>
               <input
                 type="number"
                 value={rotation}
                 onChange={(e) => setRotation(Number(e.target.value))}
-                className="border rounded-lg w-20 p-1 text-sm"
+                className="border rounded-lg w-20 p-1"
               />
             </div>
             <div className="flex items-center space-x-2 text-sm">
-              <label>Hue:</label>
+              <label>Teinte :</label>
               <input
                 type="number"
                 value={hue}
                 onChange={(e) => setHue(Number(e.target.value))}
-                className="border rounded-lg w-20 p-1 text-sm"
+                className="border rounded-lg w-20 p-1"
               />
             </div>
-            <button
-              onClick={handleModifyImage}
-              className="bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-600"
-            >
-              Apply Changes
-            </button>
           </div>
-
-          {/* Canvas for modified image */}
-          <div className="w-full md:w-1/2 mt-4 md:mt-0">
-            <canvas ref={canvasRef} className="w-full h-auto bg-gray-100 rounded-lg" />
-            {imageModified && (
-              <div className="flex space-x-4 mt-4">
-                <button
-                  onClick={handleDownloadImage}
-                  className="bg-green-500 text-white p-2 rounded-lg w-full hover:bg-green-600"
-                >
-                  Download Image
-                </button>
-                <button
-                  onClick={handleAddToPanier}
-                  className="bg-blue-500 text-white p-2 rounded-lg w-full hover:bg-blue-600"
-                  disabled={loading}
-                >
-                  {loading ? 'Adding...' : 'Add to Panier'}
-                </button>
-              </div>
-            )}
+          {/* Section de l'aperçu de l'image */}
+          <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-lg w-full max-w-md mt-4 md:mt-0">
+            <h2 className="text-lg font-semibold text-gray-700 mb-2">Aperçu de l'image</h2>
+            <canvas ref={canvasRef} className="border border-gray-300 w-full max-h-64 object-contain"></canvas>
+            <div className="flex mt-4 space-x-4">
+              <button
+                onClick={handleDownloadImage}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              >
+                Télécharger l'image
+              </button>
+              <button
+                onClick={handleAddToPanier}
+                className={`px-4 py-2 rounded-lg text-white ${loading ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'} transition duration-200`}
+                disabled={loading}
+              >
+                {loading ? 'Ajout en cours...' : 'Ajouter au panier'}
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -58,7 +58,7 @@ export default function Formlogin() {
       });
       router.push("/profile");
     } catch (error) {
-      toast.error(error.message, {
+      toast.error("Identifiant Incorrect", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,

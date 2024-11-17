@@ -68,7 +68,7 @@ export default function Tiragehome() {
         <div className="mt-6 flex flex-col items-center text-center">
           <h3 className="text-xl font-semibold text-gray-800">{tirage.name}</h3>
           <p className="text-gray-600 mt-2 text-sm">{tirage.description}</p>
-          <p className="text-blue-600 font-bold mt-3 text-lg">${tirage.price}</p>
+          <p className="text-blue-600 font-bold mt-3 text-lg">{tirage.price}DT</p>
         </div>
         {tirage.formats && (
           <div className="mt-4 w-full flex flex-wrap justify-center gap-2 text-sm text-gray-500">
