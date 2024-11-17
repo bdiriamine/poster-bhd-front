@@ -7,7 +7,7 @@ export default function SideFormatandTaille({ setSelectedImage, formatData }) {
   const [selectedTaille, setSelectedTaille] = useState(null);
   const [expandedFormat, setExpandedFormat] = useState(null);
   const router = useRouter();
-  // Directly use formatData prop
+  // Utiliser directement la prop formatData
   useEffect(() => {
     if (formatData) {
       setFormats(formatData);
@@ -28,15 +28,15 @@ export default function SideFormatandTaille({ setSelectedImage, formatData }) {
       localStorage.setItem("taille", selectedTaille);
       router.push("/download");
     } else {
-      console.log("No taille selected.");
+      console.log("Aucune taille sélectionnée.");
     }
   };
 
   return (
     <div className="flex flex-col p-6 border border-gray-300 rounded-lg shadow-md bg-white max-w-lg mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl overflow-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center">Available Formats</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Formats disponibles</h2>
       {formats.length === 0 ? (
-        <p className="text-center text-gray-500">No formats available</p>
+        <p className="text-center text-gray-500">Aucun format disponible</p>
       ) : (
         formats.map((format) => (
           <div key={format._id} className="mb-4">
@@ -49,15 +49,15 @@ export default function SideFormatandTaille({ setSelectedImage, formatData }) {
             </div>
             {expandedFormat === format._id && (
               <div className="p-4 transition-all duration-300 ease-in-out">
-                <h4 className="text-md text-gray-600 mb-2">Sizes:</h4>
+                <h4 className="text-md text-gray-600 mb-2">Tailles :</h4>
                 <div className="flex flex-col space-y-2">
-                  {format.tailles.map((taille) => ( // Map over tailles if it's an array
+                  {format.tailles.map((taille) => (
                     <label key={taille._id} className="flex items-center p-2 rounded-md hover:bg-gray-200 transition duration-200">
                       <input
                         type="radio"
                         name="taille"
-                        checked={selectedTaille === taille._id} // Use taille._id
-                        onChange={() => handleTailleChange(taille._id, taille.image)} // Use taille.image
+                        checked={selectedTaille === taille._id}
+                        onChange={() => handleTailleChange(taille._id, taille.image)}
                         className="form-radio h-5 w-5 text-indigo-600 border-gray-300 rounded focus:ring focus:ring-indigo-200"
                       />
                       <span className="ml-2 text-gray-800">{`${taille.width} ${taille.unit} x ${taille.height} ${taille.unit} - dt ${taille.price.toFixed(2)}`}</span>

@@ -18,16 +18,16 @@ export default function CalendrierphotoHome() {
         const data = await response.json();
 
         if (Array.isArray(data.data)) {
-          // Filter products based on `sousCategories` values
+          // Filtrer les produits en fonction des valeurs de `sousCategories`
           const filteredProducts = data.data.filter(product =>
             ["Calendrier de bureau", "Calendrier mural", "Planificateur familial"].includes(product.name)
           );
           setProducts(filteredProducts);
         } else {
-          console.error('Unexpected data format:', data);
+          console.error('Format de données inattendu:', data);
         }
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Erreur lors de la récupération des produits:', error);
       }
     };
 
@@ -107,7 +107,7 @@ export default function CalendrierphotoHome() {
                       Promotion: {promotion.name}
                     </p>
                     <p className="text-gray-500 text-xs">
-                      Valid until {new Date(promotion.endDate).toLocaleDateString()}
+                      Valide jusqu'au {new Date(promotion.endDate).toLocaleDateString()}
                     </p>
                   </div>
                 )}

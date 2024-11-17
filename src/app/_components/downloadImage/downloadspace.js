@@ -51,42 +51,45 @@ export default function Downloadspace() {
     event.preventDefault();
   };
 
-  const handleModifyImage = () => {
-    if (imageURL && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
+const handleModifyImage = () => {
+  if (imageURL && canvasRef.current) {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
 
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
+    img.onload = () => {
+      const maxWidth = 1000; // Set your desired max width
+      const maxHeight = 1000; // Set your desired max height
+      let width = img.width;
+      let height = img.height;
 
-        ctx.filter = `
-          brightness(${brightness}%) 
-          contrast(${contrast}%) 
-          blur(${blur}px) 
-          hue-rotate(${hue}deg) 
-          saturate(${saturation}%) 
-          grayscale(${grayscale}%)
-        `;
+      // Resize image if necessary
+      if (width > maxWidth || height > maxHeight) {
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+        width = width * ratio;
+        height = height * ratio;
+      }
 
-        ctx.save();
-        if (rotation !== 0) {
-          ctx.translate(canvas.width / 2, canvas.height / 2);
-          ctx.rotate((rotation * Math.PI) / 180);
-          ctx.translate(-canvas.width / 2, -canvas.height / 2);
-        }
+      canvas.width = width;
+      canvas.height = height;
 
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        ctx.restore();
+      ctx.filter = `
+        brightness(${brightness}%) 
+        contrast(${contrast}%) 
+        blur(${blur}px) 
+        hue-rotate(${hue}deg) 
+        saturate(${saturation}%) 
+        grayscale(${grayscale}%)
+      `;
 
-        const modifiedURL = canvas.toDataURL('image/png');
-        setImageModified(modifiedURL);
-      };
+      ctx.drawImage(img, 0, 0, width, height);
+      const modifiedURL = canvas.toDataURL('image/png'); // Now the image is resized
+      setImageModified(modifiedURL);
+    };
 
-      img.src = imageURL;
-    }
-  };
+    img.src = imageURL;
+  }
+};
 
   useEffect(() => {
     const debounceModifyImage = setTimeout(() => {
@@ -148,6 +151,12 @@ export default function Downloadspace() {
             },
             body: formData,
           });
+          
+          if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Erreur serveur:", errorData);
+            toast.error(`Erreur: ${errorData.message || 'Échec de l\'ajout au panier'}`);
+          }
 
           if (response.ok) {
             toast.success("Produit ajouté au panier avec succès !");

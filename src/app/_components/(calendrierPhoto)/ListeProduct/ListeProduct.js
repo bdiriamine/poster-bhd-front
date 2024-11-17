@@ -6,6 +6,7 @@ import clPhotos from '../../../../../public/assets/image/mr.avif';
 import clFamilial from '../../../../../public/assets/image/fm.avif';
 import Link from 'next/link';
 import Image from 'next/image';
+import Loader from '../../loader/loader';
 
 export default function ListeProduct({ msg }) {
   const [calendriePhotos, setCalendriePhotos] = useState([]);
@@ -34,7 +35,7 @@ export default function ListeProduct({ msg }) {
       setLoading(true);
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/calendriePhoto?sousCategoryName=${encodeURIComponent(msg)}`);
-        if (!response.ok) throw new Error('Failed to fetch data');
+        if (!response.ok) throw new Error('Échec de la récupération des données');
 
         const data = await response.json();
         const products = data.data;
@@ -59,13 +60,13 @@ export default function ListeProduct({ msg }) {
       )
     : calendriePhotos;
 
-  if (loading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-center text-red-500">Error: {error}</div>;
+  if (loading) return <div className="text-center">  <Loader /> </div>;
+  if (error) return <div className="text-center text-red-500">Erreur : {error}</div>;
 
-  const handleProductClick = (productId,numPhoto) => {
-    localStorage.setItem('produits', productId); // Save the product ID in local storage
-    localStorage.setItem('numbres', numPhoto); // Save the product ID in local storage
-    localStorage.setItem('type',"calendriePhoto")
+  const handleProductClick = (productId, numPhoto) => {
+    localStorage.setItem('produits', productId); // Enregistrer l'ID du produit dans le stockage local
+    localStorage.setItem('numbres', numPhoto); // Enregistrer l'ID du produit dans le stockage local
+    localStorage.setItem('type', "calendriePhoto");
   };
 
   return (
@@ -73,26 +74,22 @@ export default function ListeProduct({ msg }) {
       <Slides setimage={currentImage} />
 
       <div className="flex flex-col lg:flex-row mt-2">
-        {/* Format Filter Buttons */}
+        {/* Boutons de filtrage par format */}
         <div className="lg:w-1/4 mb-8 lg:mb-0 lg:mr-8 text-sm">
           <div className="bg-white shadow-lg rounded-lg p-4">
-            <p className="font-bold mb-4">Filter by Format Type:</p>
+            <p className="font-bold mb-4">Filtrer par type de format :</p>
             <div className="flex lg:flex-col gap-2 lg:gap-4">
               <button
                 onClick={() => setSelectedFormatType('')}
-                className={`px-4 py-2 text-sm rounded-md font-semibold transition ${
-                  selectedFormatType === '' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                }`}
+                className={`px-4 py-2 text-sm rounded-md font-semibold transition ${selectedFormatType === '' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
               >
-                All Formats
+                Tous les formats
               </button>
               {formatTypes.map((formatType) => (
                 <button
                   key={formatType}
                   onClick={() => setSelectedFormatType(formatType)}
-                  className={`px-4 py-2 text-sm rounded-md font-semibold transition ${
-                    selectedFormatType === formatType ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                  }`}
+                  className={`px-4 py-2 text-sm rounded-md font-semibold transition ${selectedFormatType === formatType ? 'bg-orange-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
                 >
                   {formatType}
                 </button>
@@ -101,7 +98,7 @@ export default function ListeProduct({ msg }) {
           </div>
         </div>
 
-        {/* Product Grid */}
+        {/* Grille des produits */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 flex-1">
           {filteredProducts.map((product) => {
             const { price, priceAfterDiscount, promotions, imageCover, name } = product;
@@ -110,18 +107,16 @@ export default function ListeProduct({ msg }) {
             return (
               <Link href={`/multiDetailes`} key={product._id} passHref>
                 <div
-                  onClick={() => handleProductClick(product._id,product.numberOfPhotos)} // Call the function to save the product ID
-                  className={`relative flex flex-col bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ${
-                    hasPromotion ? 'border-2 border-blue-400 bg-gradient-to-br from-blue-50 to-blue-100' : 'border border-gray-200'
-                  }`}
+                  onClick={() => handleProductClick(product._id, product.numberOfPhotos)} // Appeler la fonction pour enregistrer l'ID du produit
+                  className={`relative flex flex-col bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ${hasPromotion ? 'border-2 border-blue-400 bg-gradient-to-br from-blue-50 to-blue-100' : 'border border-gray-200'}`}
                 >
                   <div className="relative md:h-32 w-full overflow-hidden rounded-lg mb-4">
                     <Image
                       src={imageCover}
                       alt={name}
                       layout="responsive"
-                      width={500} // Set based on your image's aspect ratio
-                      height={500} // Set based on your image's aspect ratio
+                      width={500} // Définir en fonction du ratio de votre image
+                      height={500} // Définir en fonction du ratio de votre image
                       className="rounded-lg transition-transform duration-300 transform hover:scale-105"
                     />
                     {hasPromotion && (
@@ -143,8 +138,8 @@ export default function ListeProduct({ msg }) {
                   </div>
                   {hasPromotion && (
                     <div className="mt-4 text-center">
-                      <p className="text-green-500 text-sm font-medium">Promotion: {promotions.name}</p>
-                      <p className="text-gray-500 text-xs">Valid until {new Date(promotions.endDate).toLocaleDateString()}</p>
+                      <p className="text-green-500 text-sm font-medium">Promotion : {promotions.name}</p>
+                      <p className="text-gray-500 text-xs">Valide jusqu'au {new Date(promotions.endDate).toLocaleDateString()}</p>
                     </div>
                   )}
                 </div>

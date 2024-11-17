@@ -2,7 +2,6 @@
 import Image from 'next/image';
 
 const SideImage = ({ img }) => {
-  console.log(img)
   return (
     <div className="relative w-full h-full overflow-hidden rounded-lg transition-transform duration-300 transform hover:scale-105 ">
       {img ? (
