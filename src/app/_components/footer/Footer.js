@@ -161,7 +161,7 @@ export default function Footer() {
             isVisible ? 'animate-slide-up' : 'opacity-0'
           }`}
         >
-          <p>afficheXXL © 2024</p>
+          <p>Poster BHD © 2024</p>
           <div className="flex flex-col md:flex-row justify-evenly space-x-4">
             <p>Politique de confidentialité</p>
             <p>Déclaration relative aux cookies</p>
